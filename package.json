@@ -1,0 +1,19 @@
+{
+  "name": "lisp-ts",
+  "version": "1.0.0",
+  "description": "A toy Scheme interpreter written in TypeScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samcooper720x/lisp-ts.git"
+  },
+  "author": "Sam Cooper",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samcooper720x/lisp-ts/issues"
+  },
+  "homepage": "https://github.com/samcooper720x/lisp-ts#readme"
+}
