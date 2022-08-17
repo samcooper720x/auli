@@ -13,8 +13,8 @@ Install all three and volta should make sure you're using the right versions.
 ### Setup
 
 1. `yarn install` to install dependencies.
-2. `npm run tests` to ensure everything is working ok.
-3. `npm run build` to build.
+2. `yarn run tests` to ensure everything is working ok.
+3. `yarn run build` to build.
 
 ### Evaluating expressions
 
