@@ -1,29 +1,40 @@
 {
-  "name": "lisp-ts",
+  "name": "auli",
   "version": "1.0.0",
-  "description": "A toy Scheme interpreter written in TypeScript.",
-  "main": "index.js",
+  "description": "An interpreter for a subset of Lisp so small that it's almost useless.",
+  "main": "dist/auli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "auli": "node dist/auli.js",
+    "build": "node ./esbuild.js",
+    "tests": "jest --runInBand -c jest.config.js",
     "eslint": "eslint --fix --ignore-path .eslintignore --ext .js,.ts .",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samcooper720x/lisp-ts.git"
+    "url": "git+https://github.com/samcooper720x/auli.git"
   },
-  "author": "Sam Cooper",
   "license": "MIT",
+  "author": "Sam Cooper",
   "bugs": {
-    "url": "https://github.com/samcooper720x/lisp-ts/issues"
+    "url": "https://github.com/samcooper720x/auli/issues"
   },
-  "homepage": "https://github.com/samcooper720x/lisp-ts#readme",
+  "homepage": "https://github.com/samcooper720x/auli#readme",
   "devDependencies": {
+    "@types/jest": "^28.1.6",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
+    "esbuild": "^0.15.5",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
+    "jest": "^28.1.3",
     "prettier": "^2.5.1",
+    "ts-jest": "^28.0.7",
     "typescript": "^4.5.5"
-  }
+  },
+  "volta": {
+    "node": "16.17.0",
+    "yarn": "1.22.19"
+  },
+  "packageManager": "yarn@3.2.2"
 }
