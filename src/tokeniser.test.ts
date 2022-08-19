@@ -1,9 +1,9 @@
-import { testSourceA, testTokensA } from "./resources/test-data";
+import { testSource1, testTokens1 } from "./resources/test-data";
 import { tokeniser } from "./tokeniser";
 
 describe("tokeniser", () => {
   it("takes a source string and returns a token array", () => {
-    expect(tokeniser(testSourceA)).toStrictEqual(testTokensA);
+    expect(tokeniser(testSource1)).toStrictEqual(testTokens1);
   });
 
   it("throws a syntax error on unrecognised tokens", () => {

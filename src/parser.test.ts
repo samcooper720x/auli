@@ -1,10 +1,10 @@
 import { parser } from "./parser";
-import { testAstA, testTokensA } from "./resources/test-data";
+import { testAst1, testTokens1 } from "./resources/test-data";
 import { TokenType } from "./resources/types";
 
 describe("parser", () => {
   it("takes a token array and returns an ast", () => {
-    expect(parser(testTokensA)).toStrictEqual(testAstA);
+    expect(parser(testTokens1)).toStrictEqual(testAst1);
   });
 
   it("throws a syntax error there is a malformed opening expression", () => {
