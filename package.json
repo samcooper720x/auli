@@ -6,7 +6,7 @@
   "scripts": {
     "auli": "node dist/auli.js",
     "build": "node ./esbuild.js",
-    "tests": "jest --runInBand -c jest.config.js",
+    "test": "jest --runInBand -c jest.config.js",
     "eslint": "eslint --fix --ignore-path .eslintignore --ext .js,.ts .",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },

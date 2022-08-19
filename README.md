@@ -6,22 +6,22 @@ Auli is a very (very very) limited Lisp dialect.
 
 ### Pre-requisites
 
-This project uses [yarn](https://yarnpkg.com/) and [Node.js](https://nodejs.org/en/).
+This project uses [yarn](https://classic.yarnpkg.com/lang/en/) and [Node.js](https://nodejs.org/en/).
 It manages these tools using [volta](https://volta.sh/).
 Install all three and volta should make sure you're using the right versions.
 
 ### Setup
 
 1. `yarn install` to install dependencies.
-2. `yarn run tests` to ensure everything is working ok.
-3. `yarn run build` to build.
+2. `yarn tests` to ensure everything is working ok.
+3. `yarn build` to build.
 
 ### Evaluating expressions
 
 Auli provides a repl and the ability to evaluate source files.
 
-- To start the repl: `yarn run auli`
-- To evaluate a file: `yarn run auli -- <path>`
+- To start the repl: `yarn auli`
+- To evaluate a file: `yarn auli -- <path>`
 
 ## Why Auli?
 
