@@ -23,9 +23,9 @@ export function evaluate(
     return evaluate(predicate) ? evaluate(consequence) : evaluate(alternative);
   }
 
-  const standardLibarayFunction = standardLibrary.get(node.name);
+  const standardLibraryFunction = standardLibrary.get(node.name);
 
-  if (standardLibarayFunction === undefined) {
+  if (standardLibraryFunction === undefined) {
     throw new Error(`Unable to evaluate expression ${node.name}.`);
   }
 
@@ -38,7 +38,7 @@ export function evaluate(
       );
     }
 
-    return standardLibarayFunction(arg);
+    return standardLibraryFunction(arg);
   }
 
   if (node.type === ExpressionType.BINARY_OPERATION) {
@@ -52,7 +52,7 @@ export function evaluate(
       );
     }
 
-    return standardLibarayFunction(fst, snd);
+    return standardLibraryFunction(fst, snd);
   }
 
   throw new Error(`Unhandled expression ${node}.`);
