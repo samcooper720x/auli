@@ -34,7 +34,11 @@ function runPrompt(): void {
 
   readline.prompt();
   readline.on("line", (input) => {
-    run(input);
+    try {
+      run(input);
+    } catch (err) {
+      console.error(err);
+    }
     readline.prompt();
   });
 }
