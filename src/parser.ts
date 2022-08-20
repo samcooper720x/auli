@@ -72,17 +72,31 @@ function parseCallExpression(tokens: Token[]): {
     throw new SyntaxError("Missing operator in call expression.");
   }
 
-  const expressionName = getCallExpressionName(operatorToken.token);
-
-  if (expressionName === null) {
-    throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
-  }
-
   const res = parseTokens(restTokens);
 
   // For the sake of the type checker...
   if (!("params" in res)) {
     throw new Error();
+  }
+
+  if (operatorToken.token === "if") {
+    return {
+      callExpression: { type: ExpressionType.CONDITIONAL, params: res.params },
+      remainingTokens: res.remainingTokens,
+    };
+  }
+
+  if (operatorToken.token === "=") {
+    return {
+      callExpression: { type: ExpressionType.COMPARISON, params: res.params },
+      remainingTokens: res.remainingTokens,
+    };
+  }
+
+  const expressionName = getCallExpressionName(operatorToken.token);
+
+  if (expressionName === null) {
+    throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
   }
 
   return {
