@@ -4,6 +4,8 @@ import {
   testAst2,
   testTokens2,
   testTokens1,
+  testComparisonTokens,
+  testComparisonAsts,
 } from "./resources/test-data";
 import { TokenType } from "./resources/types";
 
@@ -15,6 +17,12 @@ describe("parser", () => {
 
     it("takes a token array with a conditional and returns an ast", () => {
       expect(parser(testTokens2)).toStrictEqual(testAst2);
+    });
+
+    it("parses all comparison tokens", () => {
+      for (const [i, tokens] of testComparisonTokens.entries()) {
+        expect(parser(tokens)).toStrictEqual(testComparisonAsts[i]);
+      }
     });
   });
 

@@ -18,7 +18,7 @@ describe("tokeniser", () => {
       expect(tokeniser(testSource2)).toStrictEqual(testTokens2);
     });
 
-    it("can tokenise all comparison tokens", () => {
+    it("tokenises all comparison tokens", () => {
       for (const [i, source] of testComparisonsSources.entries()) {
         expect(tokeniser(source)).toStrictEqual(testComparisonTokens[i]);
       }
