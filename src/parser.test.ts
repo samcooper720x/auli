@@ -6,6 +6,8 @@ import {
   testTokens1,
   testComparisonTokens,
   testComparisonAsts,
+  testBinaryOperationsTokens,
+  testBinaryOperationsAsts,
 } from "./resources/test-data";
 import { TokenType } from "./resources/types";
 
@@ -22,6 +24,12 @@ describe("parser", () => {
     it("parses all comparison tokens", () => {
       for (const [i, tokens] of testComparisonTokens.entries()) {
         expect(parser(tokens)).toStrictEqual(testComparisonAsts[i]);
+      }
+    });
+
+    it("parses all binary operation tokens", () => {
+      for (const [i, tokens] of testBinaryOperationsTokens.entries()) {
+        expect(parser(tokens)).toStrictEqual(testBinaryOperationsAsts[i]);
       }
     });
   });

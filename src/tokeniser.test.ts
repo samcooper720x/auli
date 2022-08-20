@@ -5,6 +5,8 @@ import {
   testTokens2,
   testComparisonsSources,
   testComparisonTokens,
+  testBinaryOperationsSources,
+  testBinaryOperationsTokens,
 } from "./resources/test-data";
 import { tokeniser } from "./tokeniser";
 
@@ -21,6 +23,12 @@ describe("tokeniser", () => {
     it("tokenises all comparison tokens", () => {
       for (const [i, source] of testComparisonsSources.entries()) {
         expect(tokeniser(source)).toStrictEqual(testComparisonTokens[i]);
+      }
+    });
+
+    it("tokenises all binary operation tokens", () => {
+      for (const [i, source] of testBinaryOperationsSources.entries()) {
+        expect(tokeniser(source)).toStrictEqual(testBinaryOperationsTokens[i]);
       }
     });
   });

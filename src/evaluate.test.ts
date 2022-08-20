@@ -2,6 +2,8 @@ import { evaluate } from "./evaluate";
 import {
   testAst1,
   testAst2,
+  testBinaryOperationsAsts,
+  testBinaryOperationsResolutions,
   testComparisonAsts,
   testComparisonResolutions,
   testResolution1,
@@ -18,10 +20,18 @@ describe("evaluate", () => {
       expect(evaluate(testAst2)).toStrictEqual(testResolution2);
     });
 
-    it("evaluates all comparison expressions", () => {
+    it("evaluates all comparisons", () => {
       for (const [i, expression] of testComparisonAsts.entries()) {
         expect(evaluate(expression)).toStrictEqual(
           testComparisonResolutions[i]
+        );
+      }
+    });
+
+    it("evaluates all binary operations", () => {
+      for (const [i, expression] of testBinaryOperationsAsts.entries()) {
+        expect(evaluate(expression)).toStrictEqual(
+          testBinaryOperationsResolutions[i]
         );
       }
     });
