@@ -63,13 +63,14 @@ Auli is intended as a hobby language to explore the craft of programming languag
 
 #### Low priority
 
+- Stricter types on expression params (types > arrays)
 - Pre-commit hooks
-- Industry standard terminology
-- Build and publish pipeline
-- Logo
+- Update terminology to match standards
 
 ### Project
 
+- Publish to npm
 - Compile to bytecode
 - Haskell port
 - Web based repl / mini ide
+- Logo
