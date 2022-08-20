@@ -1,20 +1,42 @@
-import { BinaryOperationNames } from "./types";
+import { BinaryOperationNames, UnaryOperationNames } from "./types";
 
-export const stdLib = new Map();
+export const standardLibrary = new Map();
 
-stdLib.set(BinaryOperationNames.ADD, (x: number, y: number) => x + y);
-stdLib.set(BinaryOperationNames.SUBTRACT, (x: number, y: number) => x - y);
-stdLib.set(BinaryOperationNames.MULTIPLY, (x: number, y: number) => x * y);
-stdLib.set(BinaryOperationNames.DIVIDE, (x: number, y: number) => x / y);
-stdLib.set(BinaryOperationNames.EQUAL, (x: number, y: number) => x === y);
-stdLib.set(BinaryOperationNames.NOT_EQUAL, (x: number, y: number) => x !== y);
-stdLib.set(
+standardLibrary.set(UnaryOperationNames.PRINT, (x: string) => console.log(x));
+standardLibrary.set(BinaryOperationNames.ADD, (x: number, y: number) => x + y);
+standardLibrary.set(
+  BinaryOperationNames.SUBTRACT,
+  (x: number, y: number) => x - y
+);
+standardLibrary.set(
+  BinaryOperationNames.MULTIPLY,
+  (x: number, y: number) => x * y
+);
+standardLibrary.set(
+  BinaryOperationNames.DIVIDE,
+  (x: number, y: number) => x / y
+);
+standardLibrary.set(
+  BinaryOperationNames.EQUAL,
+  (x: number, y: number) => x === y
+);
+standardLibrary.set(
+  BinaryOperationNames.NOT_EQUAL,
+  (x: number, y: number) => x !== y
+);
+standardLibrary.set(
   BinaryOperationNames.LESS_THAN_OR_EQUAL_TO,
   (x: number, y: number) => x <= y
 );
-stdLib.set(BinaryOperationNames.LESS_THAN, (x: number, y: number) => x < y);
-stdLib.set(
+standardLibrary.set(
+  BinaryOperationNames.LESS_THAN,
+  (x: number, y: number) => x < y
+);
+standardLibrary.set(
   BinaryOperationNames.MORE_THAN_OR_EQUAL_TO,
   (x: number, y: number) => x >= y
 );
-stdLib.set(BinaryOperationNames.MORE_THAN, (x: number, y: number) => x > y);
+standardLibrary.set(
+  BinaryOperationNames.MORE_THAN,
+  (x: number, y: number) => x > y
+);

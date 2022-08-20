@@ -1,4 +1,4 @@
-import { stdLib } from "./resources/standard-library";
+import { standardLibrary } from "./resources/standard-library";
 import {
   ExpressionParam,
   ExpressionType,
@@ -23,6 +23,12 @@ export function evaluate(
     return evaluate(predicate) ? evaluate(consequence) : evaluate(alternative);
   }
 
+  const standardLibarayFunction = standardLibrary.get(node.name);
+
+  if (standardLibarayFunction === undefined) {
+    throw new Error(`Unable to evaluate expression ${node.name}.`);
+  }
+
   if (node.type === ExpressionType.UNARY_OPERATION) {
     const arg = evaluate(node.param);
 
@@ -32,19 +38,13 @@ export function evaluate(
       );
     }
 
-    return evaluateUnaryOperator(node.name, arg);
+    return standardLibarayFunction(arg);
   }
 
-  const args = node.params.map((x: ExpressionParam) => evaluate(x));
-
-  const [fst, snd] = args;
-
   if (node.type === ExpressionType.BINARY_OPERATION) {
-    const fun = stdLib.get(node.name);
+    const args = node.params.map((x: ExpressionParam) => evaluate(x));
 
-    if (fun === undefined) {
-      throw new Error(`Unable to evaluate binary operation ${node.name}.`);
-    }
+    const [fst, snd] = args;
 
     if (typeof fst !== "number" || typeof snd !== "number") {
       throw new Error(
@@ -52,17 +52,8 @@ export function evaluate(
       );
     }
 
-    return fun(fst, snd);
+    return standardLibarayFunction(fst, snd);
   }
 
   throw new Error(`Unhandled expression ${node}.`);
-}
-
-function evaluateUnaryOperator(
-  operator: UnaryOperationNames,
-  param: string
-): void {
-  if (operator === UnaryOperationNames.PRINT) {
-    console.log(param);
-  }
 }
