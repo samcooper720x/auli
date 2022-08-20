@@ -4,11 +4,11 @@ export interface Token {
 }
 
 export enum TokenType {
-  OPEN_PAREN,
-  CLOSE_PAREN,
-  SYMBOL,
-  NUMBER,
-  UNHANDLED,
+  OPEN_PAREN = "(",
+  CLOSE_PAREN = ")",
+  SYMBOL = "symbol",
+  NUMBER = "number",
+  UNHANDLED = "unhandled",
 }
 
 export type Expression = Conditional | Comparison | BinaryOperation;

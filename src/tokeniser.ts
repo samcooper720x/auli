@@ -13,7 +13,7 @@ export function tokeniser(source: string): Token[] {
     return [];
   }
 
-  return tokenValues.map(generateToken);
+  return tokenValues.filter((token) => token !== "").map(generateToken);
 }
 
 interface SplitSource {
@@ -31,23 +31,17 @@ function splitSource(
 
   const [char, ...restOfChars] = chars;
 
-  if (tokenInProgress && SYMBOLS.includes(char)) {
+  const updatedTokenInProgress = `${tokenInProgress}${char}`;
+
+  if (PARENS.includes(char)) {
     return splitSource(restOfChars, [...tokens, tokenInProgress, char], "");
   }
 
-  if (SYMBOLS.includes(char)) {
-    return splitSource(restOfChars, [...tokens, char], "");
-  }
-
-  if (tokenInProgress && isWhiteSpace(char)) {
+  if (isWhiteSpace(char)) {
     return splitSource(restOfChars, [...tokens, tokenInProgress], "");
   }
 
-  if (isWhiteSpace(char)) {
-    return splitSource(restOfChars, tokens, "");
-  }
-
-  return splitSource(restOfChars, tokens, `${tokenInProgress}${char}`);
+  return splitSource(restOfChars, tokens, updatedTokenInProgress);
 }
 
 function generateToken(token: string): Token {

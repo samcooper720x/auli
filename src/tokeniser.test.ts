@@ -3,6 +3,8 @@ import {
   testTokens1,
   testSource2,
   testTokens2,
+  testComparisonsSources,
+  testComparisonTokens,
 } from "./resources/test-data";
 import { tokeniser } from "./tokeniser";
 
@@ -14,6 +16,12 @@ describe("tokeniser", () => {
 
     it("takes a source string with a conditional and returns a token array", () => {
       expect(tokeniser(testSource2)).toStrictEqual(testTokens2);
+    });
+
+    it("can tokenise all comparison tokens", () => {
+      for (const [i, source] of testComparisonsSources.entries()) {
+        expect(tokeniser(source)).toStrictEqual(testComparisonTokens[i]);
+      }
     });
   });
 

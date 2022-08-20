@@ -120,3 +120,118 @@ export const testAst2: Expression = {
 };
 
 export const testResolution2 = 42;
+
+// All comparisons
+export const testComparisonsSources = [
+  "(= 1 2)",
+  "(/= 1 2)",
+  "(<= 1 2)",
+  "(< 1 2)",
+  "(>= 1 2)",
+  "(> 1 2)",
+];
+
+export const testComparisonTokens: Token[][] = [
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "=" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "/=" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "<=" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "<" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: ">=" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: ">" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+];
+
+export const testComparisonAsts: Expression[] = [
+  {
+    type: ExpressionType.COMPARISON,
+    name: ComparisonNames.EQUAL,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.COMPARISON,
+    name: ComparisonNames.NOT_EQUAL,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.COMPARISON,
+    name: ComparisonNames.LESS_THAN_OR_EQUAL_TO,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.COMPARISON,
+    name: ComparisonNames.LESS_THAN,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.COMPARISON,
+    name: ComparisonNames.MORE_THAN_OR_EQUAL_TO,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.COMPARISON,
+    name: ComparisonNames.MORE_THAN,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+];
+
+export const testComparisonResolutions: boolean[] = [
+  false,
+  true,
+  true,
+  true,
+  false,
+  false,
+];
