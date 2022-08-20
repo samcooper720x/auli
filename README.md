@@ -21,7 +21,7 @@ Install all three and volta should make sure you're using the right versions.
 Auli provides a repl and the ability to evaluate source files.
 
 - To start the repl: `yarn auli`
-- To evaluate a file: `yarn auli -- <path>`
+- To evaluate a file: `yarn auli <path>`
 
 ## Why Auli?
 
