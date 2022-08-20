@@ -6,22 +6,29 @@ export interface Token {
 export enum TokenType {
   OPEN_PAREN = "(",
   CLOSE_PAREN = ")",
+  QUOTE = "'",
   SYMBOL = "symbol",
   NUMBER = "number",
+  STRING = "string",
   UNHANDLED = "unhandled",
 }
 
-export type Expression = Conditional | Comparison | BinaryOperation;
+export type Expression =
+  | Predicate
+  | UnaryOperation
+  | BinaryOperation
+  | TernaryOperation;
 
-export interface Conditional {
-  type: ExpressionType.CONDITIONAL;
+export interface Predicate {
+  type: ExpressionType.PREDICATE;
   params: ExpressionParam[];
+  name: PredicateNames;
 }
 
-export interface Comparison {
-  type: ExpressionType.COMPARISON;
-  params: ExpressionParam[];
-  name: ComparisonNames;
+export interface UnaryOperation {
+  type: ExpressionType.UNARY_OPERATION;
+  param: ExpressionParam;
+  name: UnaryOperationNames;
 }
 
 export interface BinaryOperation {
@@ -30,13 +37,20 @@ export interface BinaryOperation {
   name: BinaryOperationNames;
 }
 
-export enum ExpressionType {
-  CONDITIONAL = "conditional",
-  COMPARISON = "comparison",
-  BINARY_OPERATION = "call expression",
+export interface TernaryOperation {
+  type: ExpressionType.TERNARY_OPERATION;
+  params: ExpressionParam[];
+  name: TernaryOperationNames;
 }
 
-export enum ComparisonNames {
+export enum ExpressionType {
+  PREDICATE = "predicate",
+  BINARY_OPERATION = "binary expression",
+  UNARY_OPERATION = "unary expression",
+  TERNARY_OPERATION = "ternary expression",
+}
+
+export enum PredicateNames {
   EQUAL = "===",
   NOT_EQUAL = "!==",
   LESS_THAN_OR_EQUAL_TO = "<=",
@@ -53,13 +67,27 @@ export enum BinaryOperationNames {
   DIVIDE = "divide",
 }
 
-export type ExpressionParam = Expression | Literal;
+export enum UnaryOperationNames {
+  PRINT = "print",
+}
 
-export interface Literal {
-  type: LiteralType;
+export enum TernaryOperationNames {
+  IF = "if",
+}
+
+export type ExpressionParam = Expression | NumberLiteral | StringLiteral;
+
+export interface NumberLiteral {
+  type: LiteralType.NUMBER_LITERAL;
+  value: string;
+}
+
+export interface StringLiteral {
+  type: LiteralType.STRING_LITERAL;
   value: string;
 }
 
 export enum LiteralType {
   NUMBER_LITERAL = "number literal",
+  STRING_LITERAL = "string literal",
 }
