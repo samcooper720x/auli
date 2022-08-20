@@ -5,6 +5,8 @@ import {
   testTokens2,
   testSource3,
   testTokens3,
+  testSource4,
+  testTokens4,
   testBinaryOperationsSources,
   testBinaryOperationsTokens,
 } from "./resources/test-data";
@@ -20,8 +22,12 @@ describe("tokeniser", () => {
       expect(tokeniser(testSource2)).toStrictEqual(testTokens2);
     });
 
-    it("takes a source string with containing string literals and returns a token array", () => {
+    it("takes a source string containing string literals and returns a token array", () => {
       expect(tokeniser(testSource3)).toStrictEqual(testTokens3);
+    });
+
+    it("takes a source string containing a defintion and returns a token array", () => {
+      expect(tokeniser(testSource4)).toStrictEqual(testTokens4);
     });
 
     it("tokenises all binary operation tokens", () => {

@@ -6,14 +6,20 @@ export interface Token {
 export enum TokenType {
   OPEN_PAREN = "(",
   CLOSE_PAREN = ")",
-  QUOTE = "'",
+  DEFINITION = "definition",
   SYMBOL = "symbol",
   NUMBER = "number",
+  QUOTE = "'",
   STRING = "string",
   UNHANDLED = "unhandled",
 }
 
 export type Expression = UnaryOperation | BinaryOperation | TernaryOperation;
+
+export interface Definition {
+  type: ExpressionType;
+  params: [string, ExpressionParam];
+}
 
 export interface UnaryOperation {
   type: ExpressionType.UNARY_OPERATION;
@@ -34,10 +40,13 @@ export interface TernaryOperation {
 }
 
 export enum ExpressionType {
-  BINARY_OPERATION = "binary expression",
+  DEFINITION = "definition expression",
   UNARY_OPERATION = "unary expression",
+  BINARY_OPERATION = "binary expression",
   TERNARY_OPERATION = "ternary expression",
 }
+
+export type ExpressionParam = Expression | NumberLiteral | StringLiteral;
 
 export enum BinaryOperationNames {
   ADD = "add",
@@ -61,8 +70,6 @@ export enum UnaryOperationNames {
 export enum TernaryOperationNames {
   IF = "if",
 }
-
-export type ExpressionParam = Expression | NumberLiteral | StringLiteral;
 
 export interface NumberLiteral {
   type: LiteralType.NUMBER_LITERAL;

@@ -3,9 +3,11 @@ import {
   testAst1,
   testAst2,
   testAst3,
+  testAst4,
   testTokens1,
   testTokens2,
   testTokens3,
+  testTokens4,
   testBinaryOperationsTokens,
   testBinaryOperationsAsts,
 } from "./resources/test-data";
@@ -23,6 +25,10 @@ describe("parser", () => {
 
     it("takes a token array with a string literal and returns an ast", () => {
       expect(parser(testTokens3)).toStrictEqual(testAst3);
+    });
+
+    it("takes a token array with a define and returns an ast", () => {
+      expect(parser(testTokens4)).toStrictEqual(testAst4);
     });
 
     it("parses all binary operation tokens", () => {

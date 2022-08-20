@@ -42,6 +42,10 @@ function parseTokens(
     throw new Error("Unexpected eof.");
   }
 
+  if (token.type === TokenType.DEFINITION) {
+    throw new Error("handling it!");
+  }
+
   if (token.type === TokenType.NUMBER) {
     return parseTokens(restTokens, [
       ...params,

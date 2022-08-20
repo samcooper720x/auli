@@ -71,6 +71,9 @@ function generateToken(token: string): Token {
   if (token === ")") {
     return { type: TokenType.CLOSE_PAREN, token };
   }
+  if (token === "define") {
+    return { type: TokenType.DEFINITION, token };
+  }
   if (token === "'") {
     return { type: TokenType.QUOTE, token };
   }

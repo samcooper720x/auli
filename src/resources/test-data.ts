@@ -8,6 +8,7 @@ import {
   UnaryOperation,
   UnaryOperationNames,
   TernaryOperationNames,
+  Definition,
 } from "./types";
 
 // Basic math only
@@ -148,6 +149,30 @@ export const testAst3: UnaryOperation = {
 };
 
 export const testResolution3 = undefined;
+
+// Define
+export const testSource4 = "(define mOfL 42)";
+
+export const testTokens4: Token[] = [
+  { type: TokenType.OPEN_PAREN, token: "(" },
+  { type: TokenType.DEFINITION, token: "define" },
+  { type: TokenType.STRING, token: "mOfL" },
+  { type: TokenType.NUMBER, token: "42" },
+  { type: TokenType.CLOSE_PAREN, token: ")" },
+];
+
+export const testAst4: Definition = {
+  type: ExpressionType.UNARY_OPERATION,
+  params: [
+    "mOfL",
+    {
+      type: LiteralType.STRING_LITERAL,
+      value: "hello world",
+    },
+  ],
+};
+
+export const testResolution4 = undefined;
 
 // All binary operations
 export const testBinaryOperationsSources = [
