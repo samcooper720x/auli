@@ -44,7 +44,9 @@ function run(source: string): void {
   const ast = parser(tokens);
   const res = evaluate(ast);
 
-  console.log(res.toString());
+  if (res !== undefined) {
+    console.log(res.toString());
+  }
 }
 
 tsLisp(process.argv.slice(2));
