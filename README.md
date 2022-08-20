@@ -32,3 +32,44 @@ Auli is intended as a hobby language to explore the craft of programming languag
 1. The straightforward syntax and expression oriented nature of Lisp hopefully simplify the parser implementation, allowing me to roll my own without it becoming too much of a horrorshow.
 2. There are powerful language features that can provide stretch goals and new challenges (e.g.: tail-call elimination, macros).
 3. Lisps are fun to program in and even relatively limited dialects like MIT Scheme can be used to implement interesting programs.
+
+## ToDo
+
+### Bugs
+
+- Syntax errors crash repl
+
+### Functionality
+
+#### MVP
+
+- Can evaluate hello world program
+- Can define and reference
+
+#### Pipe dreams
+
+- Anonymous functions
+- Tail-call elimination
+- Standard library sufficient to complete SICP exercises
+
+### Quality
+
+#### High priority
+
+- Contextual error messages (position at minimum)
+- Test eval / entry functions
+- Help / manual page
+- Automated tests
+
+#### Low priority
+
+- Pre-commit hooks
+- Industry standard terminology
+- Build and publish pipeline
+- Logo
+
+### Project
+
+- Compile to bytecode
+- Haskell port
+- Web based repl / mini ide
