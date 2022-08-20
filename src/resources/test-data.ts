@@ -93,7 +93,7 @@ export const testAst2: Expression = {
   params: [
     {
       type: ExpressionType.COMPARISON,
-      name: ComparisonNames.EQUALS,
+      name: ComparisonNames.EQUAL,
       params: [
         { type: LiteralType.NUMBER_LITERAL, value: "1" },
         { type: LiteralType.NUMBER_LITERAL, value: "2" },
@@ -106,7 +106,7 @@ export const testAst2: Expression = {
       params: [
         {
           type: ExpressionType.COMPARISON,
-          name: ComparisonNames.EQUALS,
+          name: ComparisonNames.EQUAL,
           params: [
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
             { type: LiteralType.NUMBER_LITERAL, value: "3" },

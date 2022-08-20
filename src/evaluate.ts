@@ -42,8 +42,23 @@ function evaluateComparison(
   operator: ComparisonNames,
   [fst, snd]: [number, number]
 ): boolean {
-  if (operator === ComparisonNames.EQUALS) {
+  if (operator === ComparisonNames.EQUAL) {
     return fst === snd;
+  }
+  if (operator === ComparisonNames.NOT_EQUAL) {
+    return fst !== snd;
+  }
+  if (operator === ComparisonNames.LESS_THAN_OR_EQUAL_TO) {
+    return fst <= snd;
+  }
+  if (operator === ComparisonNames.LESS_THAN) {
+    return fst < snd;
+  }
+  if (operator === ComparisonNames.MORE_THAN_OR_EQUAL_TO) {
+    return fst >= snd;
+  }
+  if (operator === ComparisonNames.MORE_THAN) {
+    return fst > snd;
   }
 
   throw new Error(`Unable to evaluate comparison ${operator}.`);
@@ -53,10 +68,18 @@ function evaluateBinaryOperator(
   operator: BinaryOperationNames,
   [fst, snd]: [number, number]
 ): number {
-  if (operator === BinaryOperationNames.ADD) return fst + snd;
-  if (operator === BinaryOperationNames.SUBTRACT) return fst - snd;
-  if (operator === BinaryOperationNames.MULTIPLY) return fst * snd;
-  if (operator === BinaryOperationNames.DIVIDE) return fst / snd;
+  if (operator === BinaryOperationNames.ADD) {
+    return fst + snd;
+  }
+  if (operator === BinaryOperationNames.SUBTRACT) {
+    return fst - snd;
+  }
+  if (operator === BinaryOperationNames.MULTIPLY) {
+    return fst * snd;
+  }
+  if (operator === BinaryOperationNames.DIVIDE) {
+    return fst / snd;
+  }
 
   throw new Error(`Unable to evaluate binary operation ${operator}.`);
 }

@@ -37,7 +37,7 @@ export enum ExpressionType {
 }
 
 export enum ComparisonNames {
-  EQUALS = "===",
+  EQUAL = "===",
   NOT_EQUAL = "!==",
   LESS_THAN_OR_EQUAL_TO = "<=",
   LESS_THAN = "<",

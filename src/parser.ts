@@ -119,7 +119,7 @@ function parseCallExpression(tokens: Token[]): {
 function getComparisonName(token: string): ComparisonNames | null {
   switch (token) {
     case "=":
-      return ComparisonNames.EQUALS;
+      return ComparisonNames.EQUAL;
     case "/=":
       return ComparisonNames.NOT_EQUAL;
     case "<=":
