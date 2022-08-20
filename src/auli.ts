@@ -5,7 +5,7 @@ import { evaluate } from "./evaluate";
 import { parser } from "./parser";
 import { tokeniser } from "./tokeniser";
 
-export function tsLisp(args: string[]) {
+export function tsLisp(args: string[]): void {
   if (args.length > 1) {
     throw Error("Invalid usage.");
   }
