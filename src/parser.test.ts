@@ -9,7 +9,7 @@ describe("parser", () => {
 
   it("throws a syntax error there is a malformed opening expression", () => {
     const missingOpenParen = [
-      { type: TokenType.OPERATOR, token: "+" },
+      { type: TokenType.SYMBOL, token: "+" },
       { type: TokenType.NUMBER, token: "2" },
       { type: TokenType.NUMBER, token: "2" },
       { type: TokenType.CLOSE_PAREN, token: ")" },
@@ -32,7 +32,7 @@ describe("parser", () => {
   it("throws a syntax error there is no operator for a nested call expression", () => {
     const missingOperator = [
       { type: TokenType.OPEN_PAREN, token: "(" },
-      { type: TokenType.OPERATOR, token: "+" },
+      { type: TokenType.SYMBOL, token: "+" },
       { type: TokenType.NUMBER, token: "3" },
       { type: TokenType.OPEN_PAREN, token: "(" },
       { type: TokenType.NUMBER, token: "2" },
@@ -49,7 +49,7 @@ describe("parser", () => {
   it("throws an error on unhandled tokens", () => {
     const unhandledToken = [
       { type: TokenType.OPEN_PAREN, token: "(" },
-      { type: TokenType.OPERATOR, token: "+" },
+      { type: TokenType.SYMBOL, token: "+" },
       { type: TokenType.NUMBER, token: "2" },
       { type: TokenType.UNHANDLED, token: "'2'" },
       { type: TokenType.CLOSE_PAREN, token: ")" },
@@ -63,7 +63,7 @@ describe("parser", () => {
   it("throws an error if parens are not balanced", () => {
     const unhandledToken = [
       { type: TokenType.OPEN_PAREN, token: "(" },
-      { type: TokenType.OPERATOR, token: "+" },
+      { type: TokenType.SYMBOL, token: "+" },
       { type: TokenType.NUMBER, token: "2" },
       { type: TokenType.NUMBER, token: "2" },
     ];

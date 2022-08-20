@@ -1,14 +1,14 @@
 import {
-  CallExpression,
-  CallExpressionType,
+  Expression,
+  BinaryOperation,
   ExpressionParam,
   LiteralType,
-  NodeType,
+  ExpressionType,
   Token,
   TokenType,
 } from "./resources/types";
 
-export function parser(tokens: Token[]): CallExpression {
+export function parser(tokens: Token[]): Expression {
   const [fstToken, ...restTokens] = tokens;
 
   if (fstToken && fstToken.type !== TokenType.OPEN_PAREN) {
@@ -63,12 +63,12 @@ function parseTokens(
 }
 
 function parseCallExpression(tokens: Token[]): {
-  callExpression: CallExpression;
+  callExpression: Expression;
   remainingTokens: Token[];
 } {
   const [operatorToken, ...restTokens] = tokens;
 
-  if (operatorToken.type !== TokenType.OPERATOR) {
+  if (operatorToken.type !== TokenType.SYMBOL) {
     throw new SyntaxError("Missing operator in call expression.");
   }
 
@@ -87,7 +87,7 @@ function parseCallExpression(tokens: Token[]): {
 
   return {
     callExpression: {
-      type: NodeType.CALL_EXPRESSION,
+      type: ExpressionType.BINARY_OPERATION,
       name: expressionName,
       params: res.params,
     },
@@ -95,16 +95,16 @@ function parseCallExpression(tokens: Token[]): {
   };
 }
 
-function getCallExpressionName(token: string): CallExpressionType | null {
+function getCallExpressionName(token: string): BinaryOperation | null {
   switch (token) {
     case "+":
-      return CallExpressionType.ADD;
+      return BinaryOperation.ADD;
     case "-":
-      return CallExpressionType.SUBTRACT;
+      return BinaryOperation.SUBTRACT;
     case "*":
-      return CallExpressionType.MULTIPLY;
+      return BinaryOperation.MULTIPLY;
     case "/":
-      return CallExpressionType.DIVIDE;
+      return BinaryOperation.DIVIDE;
     default:
       return null;
   }

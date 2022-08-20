@@ -6,29 +6,30 @@ export interface Token {
 export enum TokenType {
   OPEN_PAREN,
   CLOSE_PAREN,
-  OPERATOR,
+  SYMBOL,
   NUMBER,
   UNHANDLED,
 }
 
-export type ExpressionParam = CallExpression | Literal;
-
-export interface CallExpression {
-  type: NodeType.CALL_EXPRESSION;
-  name: CallExpressionType;
+export interface Expression {
+  type: ExpressionType.BINARY_OPERATION;
+  name: BinaryOperation;
   params: ExpressionParam[];
 }
 
-export enum NodeType {
-  CALL_EXPRESSION = "call expression",
+export enum ExpressionType {
+  BINARY_OPERATION = "call expression",
+  CONDITIONAL = "conditional",
 }
 
-export enum CallExpressionType {
+export enum BinaryOperation {
   ADD = "add",
   SUBTRACT = "subtract",
   MULTIPLY = "multiply",
   DIVIDE = "divide",
 }
+
+export type ExpressionParam = Expression | Literal;
 
 export interface Literal {
   type: LiteralType;

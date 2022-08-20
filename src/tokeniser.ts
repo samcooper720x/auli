@@ -56,7 +56,7 @@ function generateToken(token: string): Token {
     return { type: TokenType.CLOSE_PAREN, token };
   }
   if (OPERATORS.includes(token)) {
-    return { type: TokenType.OPERATOR, token };
+    return { type: TokenType.SYMBOL, token };
   }
   if (isNumber(token)) {
     return { type: TokenType.NUMBER, token };

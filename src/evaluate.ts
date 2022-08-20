@@ -1,5 +1,5 @@
 import {
-  CallExpressionType,
+  BinaryOperation,
   ExpressionParam,
   LiteralType,
 } from "./resources/types";
@@ -17,13 +17,13 @@ export function evaluate(param: ExpressionParam): number {
 }
 
 function evaluateBinaryOperator(
-  operator: CallExpressionType,
+  operator: BinaryOperation,
   [fst, snd]: [number, number]
 ): number {
-  if (operator === CallExpressionType.ADD) return fst + snd;
-  if (operator === CallExpressionType.SUBTRACT) return fst - snd;
-  if (operator === CallExpressionType.MULTIPLY) return fst * snd;
-  if (operator === CallExpressionType.DIVIDE) return fst / snd;
+  if (operator === BinaryOperation.ADD) return fst + snd;
+  if (operator === BinaryOperation.SUBTRACT) return fst - snd;
+  if (operator === BinaryOperation.MULTIPLY) return fst * snd;
+  if (operator === BinaryOperation.DIVIDE) return fst / snd;
 
   throw new Error(`Unable to evaluate binary operation ${operator}.`);
 }
