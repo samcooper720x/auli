@@ -38,6 +38,7 @@ Auli is intended as a hobby language to explore the craft of programming languag
 ### Bugs
 
 - Syntax errors crash repl
+- Unable to evaluate multiple nested expressions (e.g.: `(if (> 2 3) 6 ((print 'this path') (+ 2 4))))`)
 
 ### Functionality
 
