@@ -38,13 +38,4 @@ describe("tokeniser", () => {
       }
     });
   });
-
-  describe("error paths", () => {
-    it.skip("throws a syntax error on unrecognised tokens", () => {
-      const unrecognisedToken = "(+ 3 (x 2 2))";
-      expect(() => tokeniser(unrecognisedToken)).toThrowError(
-        SyntaxError("Unrecognised token: x")
-      );
-    });
-  });
 });

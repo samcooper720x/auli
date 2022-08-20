@@ -4,9 +4,12 @@ import {
   ExpressionParam,
   ExpressionType,
   LiteralType,
+  UnaryOperationNames,
 } from "./resources/types";
 
-export function evaluate(node: ExpressionParam): boolean | number | string {
+export function evaluate(
+  node: ExpressionParam
+): boolean | number | string | void {
   if (node.type === LiteralType.NUMBER_LITERAL) {
     return parseFloat(node.value);
   }
@@ -22,7 +25,15 @@ export function evaluate(node: ExpressionParam): boolean | number | string {
   }
 
   if (node.type === ExpressionType.UNARY_OPERATION) {
-    throw new Error("unhandled yet");
+    const arg = evaluate(node.param);
+
+    if (typeof arg !== "string") {
+      throw new Error(
+        `Can't evaluate expression ${node.name} with arg ${node.param}.`
+      );
+    }
+
+    return evaluateUnaryOperator(node.name, arg);
   }
 
   const args = node.params.map((x: ExpressionParam) => evaluate(x));
@@ -44,6 +55,15 @@ export function evaluate(node: ExpressionParam): boolean | number | string {
   }
 
   throw new Error(`Unhandled expression ${node}.`);
+}
+
+function evaluateUnaryOperator(
+  operator: UnaryOperationNames,
+  param: string
+): void {
+  if (operator === UnaryOperationNames.PRINT) {
+    console.log(param);
+  }
 }
 
 // TODO: handle these as binary operations instead
