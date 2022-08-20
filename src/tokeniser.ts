@@ -1,7 +1,8 @@
 import { Token, TokenType } from "./resources/types";
 
-const OPERATORS = ["+", "-", "*", "/"];
-const SYMBOLS = ["(", ")", ...OPERATORS];
+const PARENS = ["(", ")"];
+const OPERATORS = ["if", "+", "-", "*", "/", "="];
+const SYMBOLS = [...PARENS, ...OPERATORS];
 
 export function tokeniser(source: string): Token[] {
   const tokenValues = splitSource(Array.from(source));
@@ -65,5 +66,5 @@ function generateToken(token: string): Token {
   throw new SyntaxError(`Unrecognised token: ${token}`);
 }
 
-const isNumber = (x: string) => !isNaN(parseInt(x));
+const isNumber = (x: string) => !isNaN(parseFloat(x));
 const isWhiteSpace = (x: string) => x === " ";

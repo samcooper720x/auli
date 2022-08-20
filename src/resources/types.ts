@@ -12,14 +12,15 @@ export enum TokenType {
 }
 
 export interface Expression {
-  type: ExpressionType.BINARY_OPERATION;
-  name: BinaryOperation;
+  type: ExpressionType;
   params: ExpressionParam[];
+  name?: BinaryOperation;
 }
 
 export enum ExpressionType {
   BINARY_OPERATION = "call expression",
   CONDITIONAL = "conditional",
+  COMPARISON = "comparison",
 }
 
 export enum BinaryOperation {
@@ -27,6 +28,10 @@ export enum BinaryOperation {
   SUBTRACT = "subtract",
   MULTIPLY = "multiply",
   DIVIDE = "divide",
+}
+
+export enum Comparison {
+  EQUALS = "equals",
 }
 
 export type ExpressionParam = Expression | Literal;
