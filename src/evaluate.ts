@@ -6,18 +6,26 @@ import {
   LiteralType,
 } from "./resources/types";
 
-export function evaluate(node: ExpressionParam): boolean | number {
+export function evaluate(node: ExpressionParam): boolean | number | string {
   if (node.type === LiteralType.NUMBER_LITERAL) {
     return parseFloat(node.value);
   }
 
-  if (node.type === ExpressionType.CONDITIONAL) {
+  if (node.type === LiteralType.STRING_LITERAL) {
+    return node.value;
+  }
+
+  if (node.type === ExpressionType.TERNARY_OPERATION) {
     const [predicate, consequence, alternative] = node.params;
 
     return evaluate(predicate) ? evaluate(consequence) : evaluate(alternative);
   }
 
-  const args = node.params.map((x) => evaluate(x));
+  if (node.type === ExpressionType.UNARY_OPERATION) {
+    throw new Error("unhandled yet");
+  }
+
+  const args = node.params.map((x: ExpressionParam) => evaluate(x));
 
   const [fst, snd] = args;
 

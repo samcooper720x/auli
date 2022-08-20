@@ -18,7 +18,7 @@ describe("tokeniser", () => {
       expect(tokeniser(testSource1)).toStrictEqual(testTokens1);
     });
 
-    it("takes a source string with a conditional and returns a token array", () => {
+    it("takes a source string with a predicate and returns a token array", () => {
       expect(tokeniser(testSource2)).toStrictEqual(testTokens2);
     });
 

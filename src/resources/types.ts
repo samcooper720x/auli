@@ -14,33 +14,27 @@ export enum TokenType {
 }
 
 export type Expression =
-  | Conditional
-  | Comparison
-  | BinaryOperation
+  | Predicate
   | UnaryOperation
+  | BinaryOperation
   | TernaryOperation;
 
-export interface Conditional {
-  type: ExpressionType.CONDITIONAL;
-  params: ExpressionParam[];
-}
-
-export interface Comparison {
+export interface Predicate {
   type: ExpressionType.PREDICATE;
   params: ExpressionParam[];
   name: PredicateNames;
-}
-
-export interface BinaryOperation {
-  type: ExpressionType.BINARY_OPERATION;
-  params: ExpressionParam[];
-  name: BinaryOperationNames;
 }
 
 export interface UnaryOperation {
   type: ExpressionType.UNARY_OPERATION;
   param: ExpressionParam;
   name: UnaryOperationNames;
+}
+
+export interface BinaryOperation {
+  type: ExpressionType.BINARY_OPERATION;
+  params: ExpressionParam[];
+  name: BinaryOperationNames;
 }
 
 export interface TernaryOperation {
@@ -50,7 +44,6 @@ export interface TernaryOperation {
 }
 
 export enum ExpressionType {
-  CONDITIONAL = "conditional",
   PREDICATE = "predicate",
   BINARY_OPERATION = "binary expression",
   UNARY_OPERATION = "unary expression",
@@ -82,10 +75,15 @@ export enum TernaryOperationNames {
   IF = "if",
 }
 
-export type ExpressionParam = Expression | Literal;
+export type ExpressionParam = Expression | NumberLiteral | StringLiteral;
 
-export interface Literal {
-  type: LiteralType;
+export interface NumberLiteral {
+  type: LiteralType.NUMBER_LITERAL;
+  value: string;
+}
+
+export interface StringLiteral {
+  type: LiteralType.STRING_LITERAL;
   value: string;
 }
 

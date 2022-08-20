@@ -7,9 +7,9 @@ import {
   Token,
   TokenType,
   PredicateNames,
-  Literal,
   UnaryOperationNames,
   TernaryOperationNames,
+  StringLiteral,
 } from "./resources/types";
 
 export function parser(tokens: Token[]): Expression {
@@ -93,13 +93,6 @@ function parseCallExpression(tokens: Token[]): {
   if (!("params" in res)) {
     throw new Error();
   }
-
-  // if (operatorToken.token === "if") {
-  //   return {
-  //     callExpression: { type: ExpressionType.CONDITIONAL, params: res.params },
-  //     remainingTokens: res.remainingTokens,
-  //   };
-  // }
 
   const predicateName = getPredicateName(operatorToken.token);
 
@@ -218,7 +211,7 @@ function parseString(
 ):
   | ParseString
   | {
-      stringLiteral: Literal;
+      stringLiteral: StringLiteral;
       remainingTokens: Token[];
     } {
   if (token.type === TokenType.QUOTE) {

@@ -8,6 +8,7 @@ import {
   PredicateNames,
   UnaryOperation,
   UnaryOperationNames,
+  TernaryOperationNames,
 } from "./types";
 
 // Basic math only
@@ -91,7 +92,8 @@ export const testTokens2: Token[] = [
 ];
 
 export const testAst2: Expression = {
-  type: ExpressionType.CONDITIONAL,
+  type: ExpressionType.TERNARY_OPERATION,
+  name: TernaryOperationNames.IF,
   params: [
     {
       type: ExpressionType.PREDICATE,
@@ -104,7 +106,8 @@ export const testAst2: Expression = {
     { type: LiteralType.NUMBER_LITERAL, value: "7" },
 
     {
-      type: ExpressionType.CONDITIONAL,
+      type: ExpressionType.TERNARY_OPERATION,
+      name: TernaryOperationNames.IF,
       params: [
         {
           type: ExpressionType.PREDICATE,
