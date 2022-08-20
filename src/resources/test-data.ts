@@ -1,11 +1,10 @@
 import {
   Expression,
-  BinaryOperationNames,
   LiteralType,
   ExpressionType,
   Token,
   TokenType,
-  PredicateNames,
+  BinaryOperationNames,
   UnaryOperation,
   UnaryOperationNames,
   TernaryOperationNames,
@@ -96,8 +95,8 @@ export const testAst2: Expression = {
   name: TernaryOperationNames.IF,
   params: [
     {
-      type: ExpressionType.PREDICATE,
-      name: PredicateNames.EQUAL,
+      type: ExpressionType.BINARY_OPERATION,
+      name: BinaryOperationNames.EQUAL,
       params: [
         { type: LiteralType.NUMBER_LITERAL, value: "1" },
         { type: LiteralType.NUMBER_LITERAL, value: "2" },
@@ -110,8 +109,8 @@ export const testAst2: Expression = {
       name: TernaryOperationNames.IF,
       params: [
         {
-          type: ExpressionType.PREDICATE,
-          name: PredicateNames.EQUAL,
+          type: ExpressionType.BINARY_OPERATION,
+          name: BinaryOperationNames.EQUAL,
           params: [
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
@@ -207,48 +206,48 @@ export const testPredicateTokens: Token[][] = [
 
 export const testPredicateAsts: Expression[] = [
   {
-    type: ExpressionType.PREDICATE,
-    name: PredicateNames.EQUAL,
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.EQUAL,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.PREDICATE,
-    name: PredicateNames.NOT_EQUAL,
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.NOT_EQUAL,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.PREDICATE,
-    name: PredicateNames.LESS_THAN_OR_EQUAL_TO,
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.LESS_THAN_OR_EQUAL_TO,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.PREDICATE,
-    name: PredicateNames.LESS_THAN,
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.LESS_THAN,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.PREDICATE,
-    name: PredicateNames.MORE_THAN_OR_EQUAL_TO,
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MORE_THAN_OR_EQUAL_TO,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.PREDICATE,
-    name: PredicateNames.MORE_THAN,
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MORE_THAN,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
