@@ -6,8 +6,6 @@ import {
   testTokens1,
   testTokens2,
   testTokens3,
-  testPredicateTokens,
-  testPredicateAsts,
   testBinaryOperationsTokens,
   testBinaryOperationsAsts,
 } from "./resources/test-data";
@@ -25,12 +23,6 @@ describe("parser", () => {
 
     it("takes a token array with a string literal and returns an ast", () => {
       expect(parser(testTokens3)).toStrictEqual(testAst3);
-    });
-
-    it("parses all comparison tokens", () => {
-      for (const [i, tokens] of testPredicateTokens.entries()) {
-        expect(parser(tokens)).toStrictEqual(testPredicateAsts[i]);
-      }
     });
 
     it("parses all binary operation tokens", () => {

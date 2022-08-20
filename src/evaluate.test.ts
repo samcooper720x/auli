@@ -5,8 +5,6 @@ import {
   testAst3,
   testBinaryOperationsAsts,
   testBinaryOperationsResolutions,
-  testPredicateAsts,
-  testPredicateResolutions,
   testResolution1,
   testResolution2,
   testResolution3,
@@ -24,12 +22,6 @@ describe("evaluate", () => {
 
     it("evaluates an expression with a string literal", () => {
       expect(evaluate(testAst3)).toStrictEqual(testResolution3);
-    });
-
-    it("evaluates all comparisons", () => {
-      for (const [i, expression] of testPredicateAsts.entries()) {
-        expect(evaluate(expression)).toStrictEqual(testPredicateResolutions[i]);
-      }
     });
 
     it("evaluates all binary operations", () => {

@@ -32,3 +32,13 @@ Auli is intended as a hobby language to explore the craft of programming languag
 1. The straightforward syntax and expression oriented nature of Lisp hopefully simplify the parser implementation, allowing me to roll my own without it becoming too much of a horrorshow.
 2. There are powerful language features that can provide stretch goals and new challenges (e.g.: tail-call elimination, macros).
 3. Lisps are fun to program in and even relatively limited dialects like MIT Scheme can be used to implement interesting programs.
+
+## Development notes
+
+### Extending the standard library
+
+1. Add the new symbol to the appropriate array so it can be recognised by the [tokeniser](src/tokeniser.ts).
+2. Add the new operation name to the appropriate enum in [types](src/resources/types.ts).
+3. Add a case for the new symbol to the appropriate `getOperationName` function in the [parser](src/parser.ts).
+4. Use `.set()` to extend the [standard library](src/resources/standard-library.ts) with an implementation of the new function.
+5. Handling of the new function can be tested by adding expected values to the appropriate `testOperation` arrays in [test data](src/resources/test-data.ts).

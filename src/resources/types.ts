@@ -13,17 +13,7 @@ export enum TokenType {
   UNHANDLED = "unhandled",
 }
 
-export type Expression =
-  | Predicate
-  | UnaryOperation
-  | BinaryOperation
-  | TernaryOperation;
-
-export interface Predicate {
-  type: ExpressionType.PREDICATE;
-  params: ExpressionParam[];
-  name: PredicateNames;
-}
+export type Expression = UnaryOperation | BinaryOperation | TernaryOperation;
 
 export interface UnaryOperation {
   type: ExpressionType.UNARY_OPERATION;
@@ -44,20 +34,9 @@ export interface TernaryOperation {
 }
 
 export enum ExpressionType {
-  PREDICATE = "predicate",
   BINARY_OPERATION = "binary expression",
   UNARY_OPERATION = "unary expression",
   TERNARY_OPERATION = "ternary expression",
-}
-
-export enum PredicateNames {
-  EQUAL = "===",
-  NOT_EQUAL = "!==",
-  LESS_THAN_OR_EQUAL_TO = "<=",
-  LESS_THAN = "<",
-  MORE_THAN_OR_EQUAL_TO = ">=",
-  MORE_THAN = ">",
-  // TODO: max & min
 }
 
 export enum BinaryOperationNames {
@@ -65,6 +44,14 @@ export enum BinaryOperationNames {
   SUBTRACT = "subtract",
   MULTIPLY = "multiply",
   DIVIDE = "divide",
+  EQUAL = "===",
+  NOT_EQUAL = "!==",
+  LESS_THAN_OR_EQUAL_TO = "<=",
+  LESS_THAN = "<",
+  MORE_THAN_OR_EQUAL_TO = ">=",
+  MORE_THAN = ">",
+  MAX = "max",
+  MIN = "min",
 }
 
 export enum UnaryOperationNames {

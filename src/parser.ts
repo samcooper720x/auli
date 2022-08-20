@@ -1,12 +1,11 @@
 import {
   Expression,
-  BinaryOperationNames,
   ExpressionParam,
   LiteralType,
   ExpressionType,
   Token,
   TokenType,
-  PredicateNames,
+  BinaryOperationNames,
   UnaryOperationNames,
   TernaryOperationNames,
   StringLiteral,
@@ -94,14 +93,14 @@ function parseCallExpression(tokens: Token[]): {
     throw new Error();
   }
 
-  const predicateName = getPredicateName(operatorToken.token);
+  const unaryOperationName = getUnaryOperationName(operatorToken.token);
 
-  if (predicateName) {
+  if (unaryOperationName) {
     return {
       callExpression: {
-        type: ExpressionType.PREDICATE,
-        name: predicateName,
-        params: res.params,
+        type: ExpressionType.UNARY_OPERATION,
+        name: UnaryOperationNames.PRINT,
+        param: res.params[0],
       },
       remainingTokens: res.remainingTokens,
     };
@@ -115,19 +114,6 @@ function parseCallExpression(tokens: Token[]): {
         type: ExpressionType.BINARY_OPERATION,
         name: binaryOperationName,
         params: res.params,
-      },
-      remainingTokens: res.remainingTokens,
-    };
-  }
-
-  const unaryOperationName = getUnaryOperationName(operatorToken.token);
-
-  if (unaryOperationName) {
-    return {
-      callExpression: {
-        type: ExpressionType.UNARY_OPERATION,
-        name: UnaryOperationNames.PRINT,
-        param: res.params[0],
       },
       remainingTokens: res.remainingTokens,
     };
@@ -149,20 +135,10 @@ function parseCallExpression(tokens: Token[]): {
   throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
 }
 
-function getPredicateName(token: string): PredicateNames | null {
+function getUnaryOperationName(token: string): UnaryOperationNames | null {
   switch (token) {
-    case "=":
-      return PredicateNames.EQUAL;
-    case "/=":
-      return PredicateNames.NOT_EQUAL;
-    case "<=":
-      return PredicateNames.LESS_THAN_OR_EQUAL_TO;
-    case "<":
-      return PredicateNames.LESS_THAN;
-    case ">=":
-      return PredicateNames.MORE_THAN_OR_EQUAL_TO;
-    case ">":
-      return PredicateNames.MORE_THAN;
+    case "print":
+      return UnaryOperationNames.PRINT;
     default:
       return null;
   }
@@ -178,15 +154,22 @@ function getBinaryOperationName(token: string): BinaryOperationNames | null {
       return BinaryOperationNames.MULTIPLY;
     case "/":
       return BinaryOperationNames.DIVIDE;
-    default:
-      return null;
-  }
-}
-
-function getUnaryOperationName(token: string): UnaryOperationNames | null {
-  switch (token) {
-    case "print":
-      return UnaryOperationNames.PRINT;
+    case "=":
+      return BinaryOperationNames.EQUAL;
+    case "/=":
+      return BinaryOperationNames.NOT_EQUAL;
+    case "<=":
+      return BinaryOperationNames.LESS_THAN_OR_EQUAL_TO;
+    case "<":
+      return BinaryOperationNames.LESS_THAN;
+    case ">=":
+      return BinaryOperationNames.MORE_THAN_OR_EQUAL_TO;
+    case ">":
+      return BinaryOperationNames.MORE_THAN;
+    case "max":
+      return BinaryOperationNames.MAX;
+    case "min":
+      return BinaryOperationNames.MIN;
     default:
       return null;
   }
