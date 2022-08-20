@@ -9,6 +9,7 @@ import {
   PredicateNames,
   Literal,
   UnaryOperationNames,
+  TernaryOperationNames,
 } from "./resources/types";
 
 export function parser(tokens: Token[]): Expression {
@@ -93,12 +94,12 @@ function parseCallExpression(tokens: Token[]): {
     throw new Error();
   }
 
-  if (operatorToken.token === "if") {
-    return {
-      callExpression: { type: ExpressionType.CONDITIONAL, params: res.params },
-      remainingTokens: res.remainingTokens,
-    };
-  }
+  // if (operatorToken.token === "if") {
+  //   return {
+  //     callExpression: { type: ExpressionType.CONDITIONAL, params: res.params },
+  //     remainingTokens: res.remainingTokens,
+  //   };
+  // }
 
   const predicateName = getPredicateName(operatorToken.token);
 
@@ -134,6 +135,19 @@ function parseCallExpression(tokens: Token[]): {
         type: ExpressionType.UNARY_OPERATION,
         name: UnaryOperationNames.PRINT,
         param: res.params[0],
+      },
+      remainingTokens: res.remainingTokens,
+    };
+  }
+
+  const ternaryOperationName = getTernaryOperationName(operatorToken.token);
+
+  if (ternaryOperationName) {
+    return {
+      callExpression: {
+        type: ExpressionType.TERNARY_OPERATION,
+        name: ternaryOperationName,
+        params: res.params,
       },
       remainingTokens: res.remainingTokens,
     };
@@ -180,6 +194,15 @@ function getUnaryOperationName(token: string): UnaryOperationNames | null {
   switch (token) {
     case "print":
       return UnaryOperationNames.PRINT;
+    default:
+      return null;
+  }
+}
+
+function getTernaryOperationName(token: string): TernaryOperationNames | null {
+  switch (token) {
+    case "if":
+      return TernaryOperationNames.IF;
     default:
       return null;
   }

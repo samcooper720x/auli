@@ -17,7 +17,8 @@ export type Expression =
   | Conditional
   | Comparison
   | BinaryOperation
-  | UnaryOperation;
+  | UnaryOperation
+  | TernaryOperation;
 
 export interface Conditional {
   type: ExpressionType.CONDITIONAL;
@@ -42,11 +43,18 @@ export interface UnaryOperation {
   name: UnaryOperationNames;
 }
 
+export interface TernaryOperation {
+  type: ExpressionType.TERNARY_OPERATION;
+  params: ExpressionParam[];
+  name: TernaryOperationNames;
+}
+
 export enum ExpressionType {
   CONDITIONAL = "conditional",
   PREDICATE = "predicate",
   BINARY_OPERATION = "binary expression",
   UNARY_OPERATION = "unary expression",
+  TERNARY_OPERATION = "ternary expression",
 }
 
 export enum PredicateNames {
@@ -68,6 +76,10 @@ export enum BinaryOperationNames {
 
 export enum UnaryOperationNames {
   PRINT = "print",
+}
+
+export enum TernaryOperationNames {
+  IF = "if",
 }
 
 export type ExpressionParam = Expression | Literal;
