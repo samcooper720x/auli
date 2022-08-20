@@ -1,6 +1,6 @@
 import {
   BinaryOperationNames,
-  ComparisonNames,
+  PredicateNames,
   ExpressionParam,
   ExpressionType,
   LiteralType,
@@ -12,9 +12,9 @@ export function evaluate(node: ExpressionParam): boolean | number {
   }
 
   if (node.type === ExpressionType.CONDITIONAL) {
-    const [comparison, consequence, alternative] = node.params;
+    const [predicate, consequence, alternative] = node.params;
 
-    return evaluate(comparison) ? evaluate(consequence) : evaluate(alternative);
+    return evaluate(predicate) ? evaluate(consequence) : evaluate(alternative);
   }
 
   const args = node.params.map((x) => evaluate(x));
@@ -27,8 +27,8 @@ export function evaluate(node: ExpressionParam): boolean | number {
     );
   }
 
-  if (node.type === ExpressionType.COMPARISON) {
-    return evaluateComparison(node.name, [fst, snd]);
+  if (node.type === ExpressionType.PREDICATE) {
+    return evaluatePredicate(node.name, [fst, snd]);
   }
 
   if (node.type === ExpressionType.BINARY_OPERATION) {
@@ -38,30 +38,31 @@ export function evaluate(node: ExpressionParam): boolean | number {
   throw new Error(`Unhandled expression ${node}.`);
 }
 
-function evaluateComparison(
-  operator: ComparisonNames,
+// TODO: handle these as binary operations instead
+function evaluatePredicate(
+  operator: PredicateNames,
   [fst, snd]: [number, number]
 ): boolean {
-  if (operator === ComparisonNames.EQUAL) {
+  if (operator === PredicateNames.EQUAL) {
     return fst === snd;
   }
-  if (operator === ComparisonNames.NOT_EQUAL) {
+  if (operator === PredicateNames.NOT_EQUAL) {
     return fst !== snd;
   }
-  if (operator === ComparisonNames.LESS_THAN_OR_EQUAL_TO) {
+  if (operator === PredicateNames.LESS_THAN_OR_EQUAL_TO) {
     return fst <= snd;
   }
-  if (operator === ComparisonNames.LESS_THAN) {
+  if (operator === PredicateNames.LESS_THAN) {
     return fst < snd;
   }
-  if (operator === ComparisonNames.MORE_THAN_OR_EQUAL_TO) {
+  if (operator === PredicateNames.MORE_THAN_OR_EQUAL_TO) {
     return fst >= snd;
   }
-  if (operator === ComparisonNames.MORE_THAN) {
+  if (operator === PredicateNames.MORE_THAN) {
     return fst > snd;
   }
 
-  throw new Error(`Unable to evaluate comparison ${operator}.`);
+  throw new Error(`Unable to evaluate predicate ${operator}.`);
 }
 
 function evaluateBinaryOperator(

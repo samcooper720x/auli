@@ -4,8 +4,8 @@ import {
   testAst2,
   testBinaryOperationsAsts,
   testBinaryOperationsResolutions,
-  testComparisonAsts,
-  testComparisonResolutions,
+  testPredicateAsts,
+  testPredicateResolutions,
   testResolution1,
   testResolution2,
 } from "./resources/test-data";
@@ -21,10 +21,8 @@ describe("evaluate", () => {
     });
 
     it("evaluates all comparisons", () => {
-      for (const [i, expression] of testComparisonAsts.entries()) {
-        expect(evaluate(expression)).toStrictEqual(
-          testComparisonResolutions[i]
-        );
+      for (const [i, expression] of testPredicateAsts.entries()) {
+        expect(evaluate(expression)).toStrictEqual(testPredicateResolutions[i]);
       }
     });
 

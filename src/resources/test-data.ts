@@ -5,7 +5,9 @@ import {
   ExpressionType,
   Token,
   TokenType,
-  ComparisonNames,
+  PredicateNames,
+  UnaryOperation,
+  UnaryOperationNames,
 } from "./types";
 
 // Basic math only
@@ -92,8 +94,8 @@ export const testAst2: Expression = {
   type: ExpressionType.CONDITIONAL,
   params: [
     {
-      type: ExpressionType.COMPARISON,
-      name: ComparisonNames.EQUAL,
+      type: ExpressionType.PREDICATE,
+      name: PredicateNames.EQUAL,
       params: [
         { type: LiteralType.NUMBER_LITERAL, value: "1" },
         { type: LiteralType.NUMBER_LITERAL, value: "2" },
@@ -105,8 +107,8 @@ export const testAst2: Expression = {
       type: ExpressionType.CONDITIONAL,
       params: [
         {
-          type: ExpressionType.COMPARISON,
-          name: ComparisonNames.EQUAL,
+          type: ExpressionType.PREDICATE,
+          name: PredicateNames.EQUAL,
           params: [
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
@@ -121,8 +123,32 @@ export const testAst2: Expression = {
 
 export const testResolution2 = 42;
 
-// All comparisons
-export const testComparisonsSources = [
+// String literals
+export const testSource3 = "(print 'hello world')";
+
+export const testTokens3: Token[] = [
+  { type: TokenType.OPEN_PAREN, token: "(" },
+  { type: TokenType.SYMBOL, token: "print" },
+  { type: TokenType.QUOTE, token: "'" },
+  { type: TokenType.STRING, token: "hello" },
+  { type: TokenType.STRING, token: "world" },
+  { type: TokenType.QUOTE, token: "'" },
+  { type: TokenType.CLOSE_PAREN, token: ")" },
+];
+
+export const testAst3: UnaryOperation = {
+  type: ExpressionType.UNARY_OPERATION,
+  name: UnaryOperationNames.PRINT,
+  param: {
+    type: LiteralType.STRING_LITERAL,
+    value: "hello world",
+  },
+};
+
+export const testResolution3 = undefined;
+
+// All predicates
+export const testPredicateSources = [
   "(= 1 2)",
   "(/= 1 2)",
   "(<= 1 2)",
@@ -131,7 +157,7 @@ export const testComparisonsSources = [
   "(> 1 2)",
 ];
 
-export const testComparisonTokens: Token[][] = [
+export const testPredicateTokens: Token[][] = [
   [
     { type: TokenType.OPEN_PAREN, token: "(" },
     { type: TokenType.SYMBOL, token: "=" },
@@ -176,50 +202,50 @@ export const testComparisonTokens: Token[][] = [
   ],
 ];
 
-export const testComparisonAsts: Expression[] = [
+export const testPredicateAsts: Expression[] = [
   {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.EQUAL,
+    type: ExpressionType.PREDICATE,
+    name: PredicateNames.EQUAL,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.NOT_EQUAL,
+    type: ExpressionType.PREDICATE,
+    name: PredicateNames.NOT_EQUAL,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.LESS_THAN_OR_EQUAL_TO,
+    type: ExpressionType.PREDICATE,
+    name: PredicateNames.LESS_THAN_OR_EQUAL_TO,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.LESS_THAN,
+    type: ExpressionType.PREDICATE,
+    name: PredicateNames.LESS_THAN,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.MORE_THAN_OR_EQUAL_TO,
+    type: ExpressionType.PREDICATE,
+    name: PredicateNames.MORE_THAN_OR_EQUAL_TO,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
   {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.MORE_THAN,
+    type: ExpressionType.PREDICATE,
+    name: PredicateNames.MORE_THAN,
     params: [
       { type: LiteralType.NUMBER_LITERAL, value: "1" },
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
@@ -227,7 +253,7 @@ export const testComparisonAsts: Expression[] = [
   },
 ];
 
-export const testComparisonResolutions: boolean[] = [
+export const testPredicateResolutions: boolean[] = [
   false,
   true,
   true,
