@@ -87,34 +87,55 @@ function parseCallExpression(tokens: Token[]): {
     };
   }
 
-  if (operatorToken.token === "=") {
+  const comparisonName = getComparisonName(operatorToken.token);
+
+  if (comparisonName) {
     return {
       callExpression: {
         type: ExpressionType.COMPARISON,
-        name: ComparisonNames.EQUALS,
+        name: comparisonName,
         params: res.params,
       },
       remainingTokens: res.remainingTokens,
     };
   }
 
-  const expressionName = getCallExpressionName(operatorToken.token);
+  const binaryOperationName = getBinaryOperationName(operatorToken.token);
 
-  if (expressionName === null) {
-    throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
+  if (binaryOperationName) {
+    return {
+      callExpression: {
+        type: ExpressionType.BINARY_OPERATION,
+        name: binaryOperationName,
+        params: res.params,
+      },
+      remainingTokens: res.remainingTokens,
+    };
   }
 
-  return {
-    callExpression: {
-      type: ExpressionType.BINARY_OPERATION,
-      name: expressionName,
-      params: res.params,
-    },
-    remainingTokens: res.remainingTokens,
-  };
+  throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
 }
 
-function getCallExpressionName(token: string): BinaryOperationNames | null {
+function getComparisonName(token: string): ComparisonNames | null {
+  switch (token) {
+    case "=":
+      return ComparisonNames.EQUALS;
+    case "/=":
+      return ComparisonNames.NOT_EQUAL;
+    case "<=":
+      return ComparisonNames.LESS_THAN_OR_EQUAL_TO;
+    case "<":
+      return ComparisonNames.LESS_THAN;
+    case ">=":
+      return ComparisonNames.MORE_THAN_OR_EQUAL_TO;
+    case ">":
+      return ComparisonNames.MORE_THAN;
+    default:
+      return null;
+  }
+}
+
+function getBinaryOperationName(token: string): BinaryOperationNames | null {
   switch (token) {
     case "+":
       return BinaryOperationNames.ADD;

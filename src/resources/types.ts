@@ -37,7 +37,13 @@ export enum ExpressionType {
 }
 
 export enum ComparisonNames {
-  EQUALS = "equals",
+  EQUALS = "===",
+  NOT_EQUAL = "!==",
+  LESS_THAN_OR_EQUAL_TO = "<=",
+  LESS_THAN = "<",
+  MORE_THAN_OR_EQUAL_TO = ">=",
+  MORE_THAN = ">",
+  // TODO: max & min
 }
 
 export enum BinaryOperationNames {
