@@ -1,11 +1,12 @@
 import {
   Expression,
-  BinaryOperation,
+  BinaryOperationNames,
   ExpressionParam,
   LiteralType,
   ExpressionType,
   Token,
   TokenType,
+  ComparisonNames,
 } from "./resources/types";
 
 export function parser(tokens: Token[]): Expression {
@@ -88,7 +89,11 @@ function parseCallExpression(tokens: Token[]): {
 
   if (operatorToken.token === "=") {
     return {
-      callExpression: { type: ExpressionType.COMPARISON, params: res.params },
+      callExpression: {
+        type: ExpressionType.COMPARISON,
+        name: ComparisonNames.EQUALS,
+        params: res.params,
+      },
       remainingTokens: res.remainingTokens,
     };
   }
@@ -109,16 +114,16 @@ function parseCallExpression(tokens: Token[]): {
   };
 }
 
-function getCallExpressionName(token: string): BinaryOperation | null {
+function getCallExpressionName(token: string): BinaryOperationNames | null {
   switch (token) {
     case "+":
-      return BinaryOperation.ADD;
+      return BinaryOperationNames.ADD;
     case "-":
-      return BinaryOperation.SUBTRACT;
+      return BinaryOperationNames.SUBTRACT;
     case "*":
-      return BinaryOperation.MULTIPLY;
+      return BinaryOperationNames.MULTIPLY;
     case "/":
-      return BinaryOperation.DIVIDE;
+      return BinaryOperationNames.DIVIDE;
     default:
       return null;
   }

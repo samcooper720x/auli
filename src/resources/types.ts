@@ -11,27 +11,40 @@ export enum TokenType {
   UNHANDLED,
 }
 
-export interface Expression {
-  type: ExpressionType;
+export type Expression = Conditional | Comparison | BinaryOperation;
+
+export interface Conditional {
+  type: ExpressionType.CONDITIONAL;
   params: ExpressionParam[];
-  name?: BinaryOperation;
+}
+
+export interface Comparison {
+  type: ExpressionType.COMPARISON;
+  params: ExpressionParam[];
+  name: ComparisonNames;
+}
+
+export interface BinaryOperation {
+  type: ExpressionType.BINARY_OPERATION;
+  params: ExpressionParam[];
+  name: BinaryOperationNames;
 }
 
 export enum ExpressionType {
-  BINARY_OPERATION = "call expression",
   CONDITIONAL = "conditional",
   COMPARISON = "comparison",
+  BINARY_OPERATION = "call expression",
 }
 
-export enum BinaryOperation {
+export enum ComparisonNames {
+  EQUALS = "equals",
+}
+
+export enum BinaryOperationNames {
   ADD = "add",
   SUBTRACT = "subtract",
   MULTIPLY = "multiply",
   DIVIDE = "divide",
-}
-
-export enum Comparison {
-  EQUALS = "equals",
 }
 
 export type ExpressionParam = Expression | Literal;

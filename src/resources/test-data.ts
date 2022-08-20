@@ -1,10 +1,11 @@
 import {
   Expression,
-  BinaryOperation,
+  BinaryOperationNames,
   LiteralType,
   ExpressionType,
   Token,
   TokenType,
+  ComparisonNames,
 } from "./types";
 
 // Basic math only
@@ -32,16 +33,16 @@ export const testTokens1: Token[] = [
 
 export const testAst1: Expression = {
   type: ExpressionType.BINARY_OPERATION,
-  name: BinaryOperation.ADD,
+  name: BinaryOperationNames.ADD,
   params: [
     { type: LiteralType.NUMBER_LITERAL, value: "2" },
     {
       type: ExpressionType.BINARY_OPERATION,
-      name: BinaryOperation.SUBTRACT,
+      name: BinaryOperationNames.SUBTRACT,
       params: [
         {
           type: ExpressionType.BINARY_OPERATION,
-          name: BinaryOperation.DIVIDE,
+          name: BinaryOperationNames.DIVIDE,
           params: [
             { type: LiteralType.NUMBER_LITERAL, value: "800" },
             { type: LiteralType.NUMBER_LITERAL, value: "10" },
@@ -49,7 +50,7 @@ export const testAst1: Expression = {
         },
         {
           type: ExpressionType.BINARY_OPERATION,
-          name: BinaryOperation.MULTIPLY,
+          name: BinaryOperationNames.MULTIPLY,
           params: [
             { type: LiteralType.NUMBER_LITERAL, value: "0.4" },
             { type: LiteralType.NUMBER_LITERAL, value: "100" },
@@ -92,6 +93,7 @@ export const testAst2: Expression = {
   params: [
     {
       type: ExpressionType.COMPARISON,
+      name: ComparisonNames.EQUALS,
       params: [
         { type: LiteralType.NUMBER_LITERAL, value: "1" },
         { type: LiteralType.NUMBER_LITERAL, value: "2" },
@@ -104,6 +106,7 @@ export const testAst2: Expression = {
       params: [
         {
           type: ExpressionType.COMPARISON,
+          name: ComparisonNames.EQUALS,
           params: [
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
