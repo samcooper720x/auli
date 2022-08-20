@@ -1,8 +1,9 @@
 import { Token, TokenType } from "./resources/types";
 
 const PARENS = ["(", ")"];
-const OPERATORS = ["if", "+", "-", "*", "/", "="];
-const SYMBOLS = [...PARENS, ...OPERATORS];
+const COMPARISONS = ["=", "/=", "<=", "<", ">=", ">"];
+const BINARY_OPERATORS = ["+", "-", "*", "/"];
+const SYMBOLS = [...PARENS, "if", ...COMPARISONS, ...BINARY_OPERATORS];
 
 export function tokeniser(source: string): Token[] {
   const tokenValues = splitSource(Array.from(source));
@@ -56,7 +57,7 @@ function generateToken(token: string): Token {
   if (token === ")") {
     return { type: TokenType.CLOSE_PAREN, token };
   }
-  if (OPERATORS.includes(token)) {
+  if (SYMBOLS.includes(token)) {
     return { type: TokenType.SYMBOL, token };
   }
   if (isNumber(token)) {
