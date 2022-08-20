@@ -1,7 +1,9 @@
 import { Token, TokenType } from "./resources/types";
 
-const OPERATORS = ["+", "-", "*", "/"];
-const SYMBOLS = ["(", ")", ...OPERATORS];
+const PARENS = ["(", ")"];
+const COMPARISONS = ["=", "/=", "<=", "<", ">=", ">"];
+const BINARY_OPERATORS = ["+", "-", "*", "/"];
+const SYMBOLS = [...PARENS, "if", ...COMPARISONS, ...BINARY_OPERATORS];
 
 export function tokeniser(source: string): Token[] {
   const tokenValues = splitSource(Array.from(source));
@@ -11,7 +13,7 @@ export function tokeniser(source: string): Token[] {
     return [];
   }
 
-  return tokenValues.map(generateToken);
+  return tokenValues.filter((token) => token !== "").map(generateToken);
 }
 
 interface SplitSource {
@@ -29,20 +31,12 @@ function splitSource(
 
   const [char, ...restOfChars] = chars;
 
-  if (tokenInProgress && SYMBOLS.includes(char)) {
+  if (PARENS.includes(char)) {
     return splitSource(restOfChars, [...tokens, tokenInProgress, char], "");
   }
 
-  if (SYMBOLS.includes(char)) {
-    return splitSource(restOfChars, [...tokens, char], "");
-  }
-
-  if (tokenInProgress && isWhiteSpace(char)) {
-    return splitSource(restOfChars, [...tokens, tokenInProgress], "");
-  }
-
   if (isWhiteSpace(char)) {
-    return splitSource(restOfChars, tokens, "");
+    return splitSource(restOfChars, [...tokens, tokenInProgress], "");
   }
 
   return splitSource(restOfChars, tokens, `${tokenInProgress}${char}`);
@@ -55,8 +49,8 @@ function generateToken(token: string): Token {
   if (token === ")") {
     return { type: TokenType.CLOSE_PAREN, token };
   }
-  if (OPERATORS.includes(token)) {
-    return { type: TokenType.OPERATOR, token };
+  if (SYMBOLS.includes(token)) {
+    return { type: TokenType.SYMBOL, token };
   }
   if (isNumber(token)) {
     return { type: TokenType.NUMBER, token };
@@ -65,5 +59,5 @@ function generateToken(token: string): Token {
   throw new SyntaxError(`Unrecognised token: ${token}`);
 }
 
-const isNumber = (x: string) => !isNaN(parseInt(x));
+const isNumber = (x: string) => !isNaN(parseFloat(x));
 const isWhiteSpace = (x: string) => x === " ";

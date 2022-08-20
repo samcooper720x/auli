@@ -4,31 +4,56 @@ export interface Token {
 }
 
 export enum TokenType {
-  OPEN_PAREN,
-  CLOSE_PAREN,
-  OPERATOR,
-  NUMBER,
-  UNHANDLED,
+  OPEN_PAREN = "(",
+  CLOSE_PAREN = ")",
+  SYMBOL = "symbol",
+  NUMBER = "number",
+  UNHANDLED = "unhandled",
 }
 
-export type ExpressionParam = CallExpression | Literal;
+export type Expression = Conditional | Comparison | BinaryOperation;
 
-export interface CallExpression {
-  type: NodeType.CALL_EXPRESSION;
-  name: CallExpressionType;
+export interface Conditional {
+  type: ExpressionType.CONDITIONAL;
   params: ExpressionParam[];
 }
 
-export enum NodeType {
-  CALL_EXPRESSION = "call expression",
+export interface Comparison {
+  type: ExpressionType.COMPARISON;
+  params: ExpressionParam[];
+  name: ComparisonNames;
 }
 
-export enum CallExpressionType {
+export interface BinaryOperation {
+  type: ExpressionType.BINARY_OPERATION;
+  params: ExpressionParam[];
+  name: BinaryOperationNames;
+}
+
+export enum ExpressionType {
+  CONDITIONAL = "conditional",
+  COMPARISON = "comparison",
+  BINARY_OPERATION = "call expression",
+}
+
+export enum ComparisonNames {
+  EQUAL = "===",
+  NOT_EQUAL = "!==",
+  LESS_THAN_OR_EQUAL_TO = "<=",
+  LESS_THAN = "<",
+  MORE_THAN_OR_EQUAL_TO = ">=",
+  MORE_THAN = ">",
+  // TODO: max & min
+}
+
+export enum BinaryOperationNames {
   ADD = "add",
   SUBTRACT = "subtract",
   MULTIPLY = "multiply",
   DIVIDE = "divide",
 }
+
+export type ExpressionParam = Expression | Literal;
 
 export interface Literal {
   type: LiteralType;

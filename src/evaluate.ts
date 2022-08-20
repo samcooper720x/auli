@@ -1,29 +1,85 @@
 import {
-  CallExpressionType,
+  BinaryOperationNames,
+  ComparisonNames,
   ExpressionParam,
+  ExpressionType,
   LiteralType,
 } from "./resources/types";
 
-export function evaluate(param: ExpressionParam): number {
-  if (param.type === LiteralType.NUMBER_LITERAL) {
-    return parseFloat(param.value);
+export function evaluate(node: ExpressionParam): boolean | number {
+  if (node.type === LiteralType.NUMBER_LITERAL) {
+    return parseFloat(node.value);
   }
 
-  const args = param.params.map((x) => evaluate(x));
+  if (node.type === ExpressionType.CONDITIONAL) {
+    const [comparison, consequence, alternative] = node.params;
 
-  const [fstArg, sndArg] = args;
+    return evaluate(comparison) ? evaluate(consequence) : evaluate(alternative);
+  }
 
-  return evaluateBinaryOperator(param.name, [fstArg, sndArg]);
+  const args = node.params.map((x) => evaluate(x));
+
+  const [fst, snd] = args;
+
+  if (typeof fst !== "number" || typeof snd !== "number") {
+    throw new Error(
+      `Can't evaluate expression ${node.name} with args [${fst}, ${snd}].`
+    );
+  }
+
+  if (node.type === ExpressionType.COMPARISON) {
+    return evaluateComparison(node.name, [fst, snd]);
+  }
+
+  if (node.type === ExpressionType.BINARY_OPERATION) {
+    return evaluateBinaryOperator(node.name, [fst, snd]);
+  }
+
+  throw new Error(`Unhandled expression ${node}.`);
+}
+
+function evaluateComparison(
+  operator: ComparisonNames,
+  [fst, snd]: [number, number]
+): boolean {
+  if (operator === ComparisonNames.EQUAL) {
+    return fst === snd;
+  }
+  if (operator === ComparisonNames.NOT_EQUAL) {
+    return fst !== snd;
+  }
+  if (operator === ComparisonNames.LESS_THAN_OR_EQUAL_TO) {
+    return fst <= snd;
+  }
+  if (operator === ComparisonNames.LESS_THAN) {
+    return fst < snd;
+  }
+  if (operator === ComparisonNames.MORE_THAN_OR_EQUAL_TO) {
+    return fst >= snd;
+  }
+  if (operator === ComparisonNames.MORE_THAN) {
+    return fst > snd;
+  }
+
+  throw new Error(`Unable to evaluate comparison ${operator}.`);
 }
 
 function evaluateBinaryOperator(
-  operator: CallExpressionType,
+  operator: BinaryOperationNames,
   [fst, snd]: [number, number]
 ): number {
-  if (operator === CallExpressionType.ADD) return fst + snd;
-  if (operator === CallExpressionType.SUBTRACT) return fst - snd;
-  if (operator === CallExpressionType.MULTIPLY) return fst * snd;
-  if (operator === CallExpressionType.DIVIDE) return fst / snd;
+  if (operator === BinaryOperationNames.ADD) {
+    return fst + snd;
+  }
+  if (operator === BinaryOperationNames.SUBTRACT) {
+    return fst - snd;
+  }
+  if (operator === BinaryOperationNames.MULTIPLY) {
+    return fst * snd;
+  }
+  if (operator === BinaryOperationNames.DIVIDE) {
+    return fst / snd;
+  }
 
   throw new Error(`Unable to evaluate binary operation ${operator}.`);
 }

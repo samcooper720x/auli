@@ -1,14 +1,15 @@
 import {
-  CallExpression,
-  CallExpressionType,
+  Expression,
+  BinaryOperationNames,
   ExpressionParam,
   LiteralType,
-  NodeType,
+  ExpressionType,
   Token,
   TokenType,
+  ComparisonNames,
 } from "./resources/types";
 
-export function parser(tokens: Token[]): CallExpression {
+export function parser(tokens: Token[]): Expression {
   const [fstToken, ...restTokens] = tokens;
 
   if (fstToken && fstToken.type !== TokenType.OPEN_PAREN) {
@@ -63,19 +64,13 @@ function parseTokens(
 }
 
 function parseCallExpression(tokens: Token[]): {
-  callExpression: CallExpression;
+  callExpression: Expression;
   remainingTokens: Token[];
 } {
   const [operatorToken, ...restTokens] = tokens;
 
-  if (operatorToken.type !== TokenType.OPERATOR) {
+  if (operatorToken.type !== TokenType.SYMBOL) {
     throw new SyntaxError("Missing operator in call expression.");
-  }
-
-  const expressionName = getCallExpressionName(operatorToken.token);
-
-  if (expressionName === null) {
-    throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
   }
 
   const res = parseTokens(restTokens);
@@ -85,26 +80,71 @@ function parseCallExpression(tokens: Token[]): {
     throw new Error();
   }
 
-  return {
-    callExpression: {
-      type: NodeType.CALL_EXPRESSION,
-      name: expressionName,
-      params: res.params,
-    },
-    remainingTokens: res.remainingTokens,
-  };
+  if (operatorToken.token === "if") {
+    return {
+      callExpression: { type: ExpressionType.CONDITIONAL, params: res.params },
+      remainingTokens: res.remainingTokens,
+    };
+  }
+
+  const comparisonName = getComparisonName(operatorToken.token);
+
+  if (comparisonName) {
+    return {
+      callExpression: {
+        type: ExpressionType.COMPARISON,
+        name: comparisonName,
+        params: res.params,
+      },
+      remainingTokens: res.remainingTokens,
+    };
+  }
+
+  const binaryOperationName = getBinaryOperationName(operatorToken.token);
+
+  if (binaryOperationName) {
+    return {
+      callExpression: {
+        type: ExpressionType.BINARY_OPERATION,
+        name: binaryOperationName,
+        params: res.params,
+      },
+      remainingTokens: res.remainingTokens,
+    };
+  }
+
+  throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
 }
 
-function getCallExpressionName(token: string): CallExpressionType | null {
+function getComparisonName(token: string): ComparisonNames | null {
+  switch (token) {
+    case "=":
+      return ComparisonNames.EQUAL;
+    case "/=":
+      return ComparisonNames.NOT_EQUAL;
+    case "<=":
+      return ComparisonNames.LESS_THAN_OR_EQUAL_TO;
+    case "<":
+      return ComparisonNames.LESS_THAN;
+    case ">=":
+      return ComparisonNames.MORE_THAN_OR_EQUAL_TO;
+    case ">":
+      return ComparisonNames.MORE_THAN;
+    default:
+      return null;
+  }
+}
+
+function getBinaryOperationName(token: string): BinaryOperationNames | null {
   switch (token) {
     case "+":
-      return CallExpressionType.ADD;
+      return BinaryOperationNames.ADD;
     case "-":
-      return CallExpressionType.SUBTRACT;
+      return BinaryOperationNames.SUBTRACT;
     case "*":
-      return CallExpressionType.MULTIPLY;
+      return BinaryOperationNames.MULTIPLY;
     case "/":
-      return CallExpressionType.DIVIDE;
+      return BinaryOperationNames.DIVIDE;
     default:
       return null;
   }
