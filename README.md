@@ -47,6 +47,11 @@ Auli is intended as a hobby language to explore the craft of programming languag
 - Can evaluate hello world program
 - Can define and reference
 
+#### StdLib
+
+- `concat`
+- `list`
+
 #### Pipe dreams
 
 - Anonymous functions
