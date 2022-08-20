@@ -149,17 +149,51 @@ export const testAst3: UnaryOperation = {
 
 export const testResolution3 = undefined;
 
-// All predicates
-export const testPredicateSources = [
+// All binary operations
+export const testBinaryOperationsSources = [
+  "(+ 1 2)",
+  "(- 1 2)",
+  "(* 1 2)",
+  "(/ 1 2)",
   "(= 1 2)",
   "(/= 1 2)",
   "(<= 1 2)",
   "(< 1 2)",
   "(>= 1 2)",
   "(> 1 2)",
+  "(max 1 2)",
+  "(min 1 2)",
 ];
 
-export const testPredicateTokens: Token[][] = [
+export const testBinaryOperationsTokens: Token[][] = [
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "+" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "-" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "*" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "/" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
   [
     { type: TokenType.OPEN_PAREN, token: "(" },
     { type: TokenType.SYMBOL, token: "=" },
@@ -202,9 +236,55 @@ export const testPredicateTokens: Token[][] = [
     { type: TokenType.NUMBER, token: "2" },
     { type: TokenType.CLOSE_PAREN, token: ")" },
   ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "max" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "min" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
 ];
 
-export const testPredicateAsts: Expression[] = [
+export const testBinaryOperationsAsts: Expression[] = [
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.ADD,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.SUBTRACT,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MULTIPLY,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.DIVIDE,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
   {
     type: ExpressionType.BINARY_OPERATION,
     name: BinaryOperationNames.EQUAL,
@@ -253,89 +333,35 @@ export const testPredicateAsts: Expression[] = [
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MAX,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MIN,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
 ];
 
-export const testPredicateResolutions: boolean[] = [
+export const testBinaryOperationsResolutions: (number | boolean)[] = [
+  3,
+  -1,
+  2,
+  0.5,
   false,
   true,
   true,
   true,
   false,
   false,
+  2,
+  1,
 ];
-
-// All binary operations
-export const testBinaryOperationsSources = [
-  "(+ 1 2)",
-  "(- 1 2)",
-  "(* 1 2)",
-  "(/ 1 2)",
-];
-
-export const testBinaryOperationsTokens: Token[][] = [
-  [
-    { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "+" },
-    { type: TokenType.NUMBER, token: "1" },
-    { type: TokenType.NUMBER, token: "2" },
-    { type: TokenType.CLOSE_PAREN, token: ")" },
-  ],
-  [
-    { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "-" },
-    { type: TokenType.NUMBER, token: "1" },
-    { type: TokenType.NUMBER, token: "2" },
-    { type: TokenType.CLOSE_PAREN, token: ")" },
-  ],
-  [
-    { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "*" },
-    { type: TokenType.NUMBER, token: "1" },
-    { type: TokenType.NUMBER, token: "2" },
-    { type: TokenType.CLOSE_PAREN, token: ")" },
-  ],
-  [
-    { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "/" },
-    { type: TokenType.NUMBER, token: "1" },
-    { type: TokenType.NUMBER, token: "2" },
-    { type: TokenType.CLOSE_PAREN, token: ")" },
-  ],
-];
-
-export const testBinaryOperationsAsts: Expression[] = [
-  {
-    type: ExpressionType.BINARY_OPERATION,
-    name: BinaryOperationNames.ADD,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.BINARY_OPERATION,
-    name: BinaryOperationNames.SUBTRACT,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.BINARY_OPERATION,
-    name: BinaryOperationNames.MULTIPLY,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.BINARY_OPERATION,
-    name: BinaryOperationNames.DIVIDE,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-];
-
-export const testBinaryOperationsResolutions: number[] = [3, -1, 2, 0.5];

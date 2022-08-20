@@ -2,17 +2,28 @@ import { Token, TokenType } from "./resources/types";
 
 const PARENS = ["(", ")"];
 const QUOTES = ["'"];
-const PREDICATES = ["=", "/=", "<=", "<", ">=", ">"]; // TODO: treat these as binary operators
-const BINARY_OPERATORS = ["+", "-", "*", "/"];
 const UNARY_OPERATORS = ["print"];
+const BINARY_OPERATORS = [
+  "+",
+  "-",
+  "*",
+  "/",
+  "=",
+  "/=",
+  "<=",
+  "<",
+  ">=",
+  ">",
+  "max",
+  "min",
+];
 const TERNARY_OPERATORS = ["if"];
 
 const SYMBOLS = [
   ...PARENS,
   ...QUOTES,
-  ...PREDICATES,
-  ...BINARY_OPERATORS,
   ...UNARY_OPERATORS,
+  ...BINARY_OPERATORS,
   ...TERNARY_OPERATORS,
 ];
 

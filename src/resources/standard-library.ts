@@ -40,3 +40,9 @@ standardLibrary.set(
   BinaryOperationNames.MORE_THAN,
   (x: number, y: number) => x > y
 );
+standardLibrary.set(BinaryOperationNames.MAX, (x: number, y: number) =>
+  Math.max(x, y)
+);
+standardLibrary.set(BinaryOperationNames.MIN, (x: number, y: number) =>
+  Math.min(x, y)
+);

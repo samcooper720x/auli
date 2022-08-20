@@ -50,7 +50,8 @@ export enum BinaryOperationNames {
   LESS_THAN = "<",
   MORE_THAN_OR_EQUAL_TO = ">=",
   MORE_THAN = ">",
-  // TODO: max & min
+  MAX = "max",
+  MIN = "min",
 }
 
 export enum UnaryOperationNames {

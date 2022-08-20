@@ -166,6 +166,10 @@ function getBinaryOperationName(token: string): BinaryOperationNames | null {
       return BinaryOperationNames.MORE_THAN_OR_EQUAL_TO;
     case ">":
       return BinaryOperationNames.MORE_THAN;
+    case "max":
+      return BinaryOperationNames.MAX;
+    case "min":
+      return BinaryOperationNames.MIN;
     default:
       return null;
   }
