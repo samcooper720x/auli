@@ -31,8 +31,6 @@ function splitSource(
 
   const [char, ...restOfChars] = chars;
 
-  const updatedTokenInProgress = `${tokenInProgress}${char}`;
-
   if (PARENS.includes(char)) {
     return splitSource(restOfChars, [...tokens, tokenInProgress, char], "");
   }
@@ -41,7 +39,7 @@ function splitSource(
     return splitSource(restOfChars, [...tokens, tokenInProgress], "");
   }
 
-  return splitSource(restOfChars, tokens, updatedTokenInProgress);
+  return splitSource(restOfChars, tokens, `${tokenInProgress}${char}`);
 }
 
 function generateToken(token: string): Token {
