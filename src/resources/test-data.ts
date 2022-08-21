@@ -1,11 +1,13 @@
 import {
   Expression,
-  BinaryOperationNames,
   LiteralType,
   ExpressionType,
   Token,
   TokenType,
-  ComparisonNames,
+  BinaryOperationNames,
+  UnaryOperation,
+  UnaryOperationNames,
+  TernaryOperationNames,
 } from "./types";
 
 // Basic math only
@@ -89,11 +91,12 @@ export const testTokens2: Token[] = [
 ];
 
 export const testAst2: Expression = {
-  type: ExpressionType.CONDITIONAL,
+  type: ExpressionType.TERNARY_OPERATION,
+  name: TernaryOperationNames.IF,
   params: [
     {
-      type: ExpressionType.COMPARISON,
-      name: ComparisonNames.EQUAL,
+      type: ExpressionType.BINARY_OPERATION,
+      name: BinaryOperationNames.EQUAL,
       params: [
         { type: LiteralType.NUMBER_LITERAL, value: "1" },
         { type: LiteralType.NUMBER_LITERAL, value: "2" },
@@ -102,11 +105,12 @@ export const testAst2: Expression = {
     { type: LiteralType.NUMBER_LITERAL, value: "7" },
 
     {
-      type: ExpressionType.CONDITIONAL,
+      type: ExpressionType.TERNARY_OPERATION,
+      name: TernaryOperationNames.IF,
       params: [
         {
-          type: ExpressionType.COMPARISON,
-          name: ComparisonNames.EQUAL,
+          type: ExpressionType.BINARY_OPERATION,
+          name: BinaryOperationNames.EQUAL,
           params: [
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
             { type: LiteralType.NUMBER_LITERAL, value: "3" },
@@ -121,17 +125,75 @@ export const testAst2: Expression = {
 
 export const testResolution2 = 42;
 
-// All comparisons
-export const testComparisonsSources = [
+// String literals
+export const testSource3 = "(print 'hello world')";
+
+export const testTokens3: Token[] = [
+  { type: TokenType.OPEN_PAREN, token: "(" },
+  { type: TokenType.SYMBOL, token: "print" },
+  { type: TokenType.QUOTE, token: "'" },
+  { type: TokenType.STRING, token: "hello" },
+  { type: TokenType.STRING, token: "world" },
+  { type: TokenType.QUOTE, token: "'" },
+  { type: TokenType.CLOSE_PAREN, token: ")" },
+];
+
+export const testAst3: UnaryOperation = {
+  type: ExpressionType.UNARY_OPERATION,
+  name: UnaryOperationNames.PRINT,
+  param: {
+    type: LiteralType.STRING_LITERAL,
+    value: "hello world",
+  },
+};
+
+export const testResolution3 = undefined;
+
+// All binary operations
+export const testBinaryOperationsSources = [
+  "(+ 1 2)",
+  "(- 1 2)",
+  "(* 1 2)",
+  "(/ 1 2)",
   "(= 1 2)",
   "(/= 1 2)",
   "(<= 1 2)",
   "(< 1 2)",
   "(>= 1 2)",
   "(> 1 2)",
+  "(max 1 2)",
+  "(min 1 2)",
 ];
 
-export const testComparisonTokens: Token[][] = [
+export const testBinaryOperationsTokens: Token[][] = [
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "+" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "-" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "*" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
+  [
+    { type: TokenType.OPEN_PAREN, token: "(" },
+    { type: TokenType.SYMBOL, token: "/" },
+    { type: TokenType.NUMBER, token: "1" },
+    { type: TokenType.NUMBER, token: "2" },
+    { type: TokenType.CLOSE_PAREN, token: ")" },
+  ],
   [
     { type: TokenType.OPEN_PAREN, token: "(" },
     { type: TokenType.SYMBOL, token: "=" },
@@ -174,101 +236,16 @@ export const testComparisonTokens: Token[][] = [
     { type: TokenType.NUMBER, token: "2" },
     { type: TokenType.CLOSE_PAREN, token: ")" },
   ],
-];
-
-export const testComparisonAsts: Expression[] = [
-  {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.EQUAL,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.NOT_EQUAL,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.LESS_THAN_OR_EQUAL_TO,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.LESS_THAN,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.MORE_THAN_OR_EQUAL_TO,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-  {
-    type: ExpressionType.COMPARISON,
-    name: ComparisonNames.MORE_THAN,
-    params: [
-      { type: LiteralType.NUMBER_LITERAL, value: "1" },
-      { type: LiteralType.NUMBER_LITERAL, value: "2" },
-    ],
-  },
-];
-
-export const testComparisonResolutions: boolean[] = [
-  false,
-  true,
-  true,
-  true,
-  false,
-  false,
-];
-
-// All binary operations
-export const testBinaryOperationsSources = [
-  "(+ 1 2)",
-  "(- 1 2)",
-  "(* 1 2)",
-  "(/ 1 2)",
-];
-
-export const testBinaryOperationsTokens: Token[][] = [
   [
     { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "+" },
+    { type: TokenType.SYMBOL, token: "max" },
     { type: TokenType.NUMBER, token: "1" },
     { type: TokenType.NUMBER, token: "2" },
     { type: TokenType.CLOSE_PAREN, token: ")" },
   ],
   [
     { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "-" },
-    { type: TokenType.NUMBER, token: "1" },
-    { type: TokenType.NUMBER, token: "2" },
-    { type: TokenType.CLOSE_PAREN, token: ")" },
-  ],
-  [
-    { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "*" },
-    { type: TokenType.NUMBER, token: "1" },
-    { type: TokenType.NUMBER, token: "2" },
-    { type: TokenType.CLOSE_PAREN, token: ")" },
-  ],
-  [
-    { type: TokenType.OPEN_PAREN, token: "(" },
-    { type: TokenType.SYMBOL, token: "/" },
+    { type: TokenType.SYMBOL, token: "min" },
     { type: TokenType.NUMBER, token: "1" },
     { type: TokenType.NUMBER, token: "2" },
     { type: TokenType.CLOSE_PAREN, token: ")" },
@@ -308,6 +285,83 @@ export const testBinaryOperationsAsts: Expression[] = [
       { type: LiteralType.NUMBER_LITERAL, value: "2" },
     ],
   },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.EQUAL,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.NOT_EQUAL,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.LESS_THAN_OR_EQUAL_TO,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.LESS_THAN,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MORE_THAN_OR_EQUAL_TO,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MORE_THAN,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MAX,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
+  {
+    type: ExpressionType.BINARY_OPERATION,
+    name: BinaryOperationNames.MIN,
+    params: [
+      { type: LiteralType.NUMBER_LITERAL, value: "1" },
+      { type: LiteralType.NUMBER_LITERAL, value: "2" },
+    ],
+  },
 ];
 
-export const testBinaryOperationsResolutions: number[] = [3, -1, 2, 0.5];
+export const testBinaryOperationsResolutions: (number | boolean)[] = [
+  3,
+  -1,
+  2,
+  0.5,
+  false,
+  true,
+  true,
+  true,
+  false,
+  false,
+  2,
+  1,
+];

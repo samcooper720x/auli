@@ -1,9 +1,31 @@
 import { Token, TokenType } from "./resources/types";
 
 const PARENS = ["(", ")"];
-const COMPARISONS = ["=", "/=", "<=", "<", ">=", ">"];
-const BINARY_OPERATORS = ["+", "-", "*", "/"];
-const SYMBOLS = [...PARENS, "if", ...COMPARISONS, ...BINARY_OPERATORS];
+const QUOTES = ["'"];
+const UNARY_OPERATORS = ["print"];
+const BINARY_OPERATORS = [
+  "+",
+  "-",
+  "*",
+  "/",
+  "=",
+  "/=",
+  "<=",
+  "<",
+  ">=",
+  ">",
+  "max",
+  "min",
+];
+const TERNARY_OPERATORS = ["if"];
+
+const SYMBOLS = [
+  ...PARENS,
+  ...QUOTES,
+  ...UNARY_OPERATORS,
+  ...BINARY_OPERATORS,
+  ...TERNARY_OPERATORS,
+];
 
 export function tokeniser(source: string): Token[] {
   const tokenValues = splitSource(Array.from(source));
@@ -31,7 +53,7 @@ function splitSource(
 
   const [char, ...restOfChars] = chars;
 
-  if (PARENS.includes(char)) {
+  if (PARENS.includes(char) || QUOTES.includes(char)) {
     return splitSource(restOfChars, [...tokens, tokenInProgress, char], "");
   }
 
@@ -49,14 +71,16 @@ function generateToken(token: string): Token {
   if (token === ")") {
     return { type: TokenType.CLOSE_PAREN, token };
   }
+  if (token === "'") {
+    return { type: TokenType.QUOTE, token };
+  }
   if (SYMBOLS.includes(token)) {
     return { type: TokenType.SYMBOL, token };
   }
   if (isNumber(token)) {
     return { type: TokenType.NUMBER, token };
   }
-
-  throw new SyntaxError(`Unrecognised token: ${token}`);
+  return { type: TokenType.STRING, token };
 }
 
 const isNumber = (x: string) => !isNaN(parseFloat(x));

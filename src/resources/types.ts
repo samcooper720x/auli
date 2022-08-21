@@ -6,22 +6,19 @@ export interface Token {
 export enum TokenType {
   OPEN_PAREN = "(",
   CLOSE_PAREN = ")",
+  QUOTE = "'",
   SYMBOL = "symbol",
   NUMBER = "number",
+  STRING = "string",
   UNHANDLED = "unhandled",
 }
 
-export type Expression = Conditional | Comparison | BinaryOperation;
+export type Expression = UnaryOperation | BinaryOperation | TernaryOperation;
 
-export interface Conditional {
-  type: ExpressionType.CONDITIONAL;
-  params: ExpressionParam[];
-}
-
-export interface Comparison {
-  type: ExpressionType.COMPARISON;
-  params: ExpressionParam[];
-  name: ComparisonNames;
+export interface UnaryOperation {
+  type: ExpressionType.UNARY_OPERATION;
+  param: ExpressionParam;
+  name: UnaryOperationNames;
 }
 
 export interface BinaryOperation {
@@ -30,20 +27,16 @@ export interface BinaryOperation {
   name: BinaryOperationNames;
 }
 
-export enum ExpressionType {
-  CONDITIONAL = "conditional",
-  COMPARISON = "comparison",
-  BINARY_OPERATION = "call expression",
+export interface TernaryOperation {
+  type: ExpressionType.TERNARY_OPERATION;
+  params: ExpressionParam[];
+  name: TernaryOperationNames;
 }
 
-export enum ComparisonNames {
-  EQUAL = "===",
-  NOT_EQUAL = "!==",
-  LESS_THAN_OR_EQUAL_TO = "<=",
-  LESS_THAN = "<",
-  MORE_THAN_OR_EQUAL_TO = ">=",
-  MORE_THAN = ">",
-  // TODO: max & min
+export enum ExpressionType {
+  BINARY_OPERATION = "binary expression",
+  UNARY_OPERATION = "unary expression",
+  TERNARY_OPERATION = "ternary expression",
 }
 
 export enum BinaryOperationNames {
@@ -51,15 +44,37 @@ export enum BinaryOperationNames {
   SUBTRACT = "subtract",
   MULTIPLY = "multiply",
   DIVIDE = "divide",
+  EQUAL = "===",
+  NOT_EQUAL = "!==",
+  LESS_THAN_OR_EQUAL_TO = "<=",
+  LESS_THAN = "<",
+  MORE_THAN_OR_EQUAL_TO = ">=",
+  MORE_THAN = ">",
+  MAX = "max",
+  MIN = "min",
 }
 
-export type ExpressionParam = Expression | Literal;
+export enum UnaryOperationNames {
+  PRINT = "print",
+}
 
-export interface Literal {
-  type: LiteralType;
+export enum TernaryOperationNames {
+  IF = "if",
+}
+
+export type ExpressionParam = Expression | NumberLiteral | StringLiteral;
+
+export interface NumberLiteral {
+  type: LiteralType.NUMBER_LITERAL;
+  value: string;
+}
+
+export interface StringLiteral {
+  type: LiteralType.STRING_LITERAL;
   value: string;
 }
 
 export enum LiteralType {
   NUMBER_LITERAL = "number literal",
+  STRING_LITERAL = "string literal",
 }

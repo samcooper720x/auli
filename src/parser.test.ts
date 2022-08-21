@@ -2,10 +2,10 @@ import { parser } from "./parser";
 import {
   testAst1,
   testAst2,
-  testTokens2,
+  testAst3,
   testTokens1,
-  testComparisonTokens,
-  testComparisonAsts,
+  testTokens2,
+  testTokens3,
   testBinaryOperationsTokens,
   testBinaryOperationsAsts,
 } from "./resources/test-data";
@@ -17,14 +17,12 @@ describe("parser", () => {
       expect(parser(testTokens1)).toStrictEqual(testAst1);
     });
 
-    it("takes a token array with a conditional and returns an ast", () => {
+    it("takes a token array with a predicate and returns an ast", () => {
       expect(parser(testTokens2)).toStrictEqual(testAst2);
     });
 
-    it("parses all comparison tokens", () => {
-      for (const [i, tokens] of testComparisonTokens.entries()) {
-        expect(parser(tokens)).toStrictEqual(testComparisonAsts[i]);
-      }
+    it("takes a token array with a string literal and returns an ast", () => {
+      expect(parser(testTokens3)).toStrictEqual(testAst3);
     });
 
     it("parses all binary operation tokens", () => {
@@ -48,11 +46,20 @@ describe("parser", () => {
         { type: TokenType.NUMBER, token: "2" },
         { type: TokenType.CLOSE_PAREN, token: ")" },
       ];
-
+      const invalidOperator = [
+        { type: TokenType.OPEN_PAREN, token: "(" },
+        { type: TokenType.STRING, token: "x" },
+        { type: TokenType.NUMBER, token: "2" },
+        { type: TokenType.NUMBER, token: "2" },
+        { type: TokenType.CLOSE_PAREN, token: ")" },
+      ];
       expect(() => parser(missingOpenParen)).toThrowError(
         SyntaxError("No initial call expression found.")
       );
       expect(() => parser(missingOperator)).toThrowError(
+        SyntaxError("Missing operator in call expression.")
+      );
+      expect(() => parser(invalidOperator)).toThrowError(
         SyntaxError("Missing operator in call expression.")
       );
     });

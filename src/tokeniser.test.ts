@@ -3,8 +3,8 @@ import {
   testTokens1,
   testSource2,
   testTokens2,
-  testComparisonsSources,
-  testComparisonTokens,
+  testSource3,
+  testTokens3,
   testBinaryOperationsSources,
   testBinaryOperationsTokens,
 } from "./resources/test-data";
@@ -16,29 +16,18 @@ describe("tokeniser", () => {
       expect(tokeniser(testSource1)).toStrictEqual(testTokens1);
     });
 
-    it("takes a source string with a conditional and returns a token array", () => {
+    it("takes a source string with a predicate and returns a token array", () => {
       expect(tokeniser(testSource2)).toStrictEqual(testTokens2);
     });
 
-    it("tokenises all comparison tokens", () => {
-      for (const [i, source] of testComparisonsSources.entries()) {
-        expect(tokeniser(source)).toStrictEqual(testComparisonTokens[i]);
-      }
+    it("takes a source string with containing string literals and returns a token array", () => {
+      expect(tokeniser(testSource3)).toStrictEqual(testTokens3);
     });
 
     it("tokenises all binary operation tokens", () => {
       for (const [i, source] of testBinaryOperationsSources.entries()) {
         expect(tokeniser(source)).toStrictEqual(testBinaryOperationsTokens[i]);
       }
-    });
-  });
-
-  describe("error paths", () => {
-    it("throws a syntax error on unrecognised tokens", () => {
-      const unrecognisedToken = "(+ 3 (x 2 2))";
-      expect(() => tokeniser(unrecognisedToken)).toThrowError(
-        SyntaxError("Unrecognised token: x")
-      );
     });
   });
 });

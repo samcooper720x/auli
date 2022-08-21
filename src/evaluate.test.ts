@@ -2,12 +2,12 @@ import { evaluate } from "./evaluate";
 import {
   testAst1,
   testAst2,
+  testAst3,
   testBinaryOperationsAsts,
   testBinaryOperationsResolutions,
-  testComparisonAsts,
-  testComparisonResolutions,
   testResolution1,
   testResolution2,
+  testResolution3,
 } from "./resources/test-data";
 
 describe("evaluate", () => {
@@ -20,12 +20,8 @@ describe("evaluate", () => {
       expect(evaluate(testAst2)).toStrictEqual(testResolution2);
     });
 
-    it("evaluates all comparisons", () => {
-      for (const [i, expression] of testComparisonAsts.entries()) {
-        expect(evaluate(expression)).toStrictEqual(
-          testComparisonResolutions[i]
-        );
-      }
+    it("evaluates an expression with a string literal", () => {
+      expect(evaluate(testAst3)).toStrictEqual(testResolution3);
     });
 
     it("evaluates all binary operations", () => {

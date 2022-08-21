@@ -34,7 +34,11 @@ function runPrompt(): void {
 
   readline.prompt();
   readline.on("line", (input) => {
-    run(input);
+    try {
+      run(input);
+    } catch (err) {
+      console.error(err);
+    }
     readline.prompt();
   });
 }
@@ -44,7 +48,9 @@ function run(source: string): void {
   const ast = parser(tokens);
   const res = evaluate(ast);
 
-  console.log(res.toString());
+  if (res !== undefined) {
+    console.log(res.toString());
+  }
 }
 
 tsLisp(process.argv.slice(2));
