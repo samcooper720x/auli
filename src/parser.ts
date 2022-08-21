@@ -29,7 +29,7 @@ function parseExpression(tokens: Token[]): {
 } {
   const [operatorToken, ...restTokens] = tokens;
 
-  if (operatorToken.type === TokenType.DEFINITION) {
+  if (operatorToken.type === TokenType.DEFINE) {
     const [nameToken, ...restRest] = restTokens;
 
     const res = parseTokens(restRest);
@@ -58,6 +58,10 @@ function parseExpression(tokens: Token[]): {
   // For the sake of the type checker...
   if (!("params" in res)) {
     throw new Error();
+  }
+
+  if (operatorToken.token === "begin") {
+    return {};
   }
 
   const unaryOperationName = getUnaryOperationName(operatorToken.token);
