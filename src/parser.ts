@@ -29,7 +29,7 @@ function parseExpression(tokens: Token[]): {
 } {
   const [operatorToken, ...restTokens] = tokens;
 
-  if (operatorToken.type === TokenType.DEFINITION) {
+  if (operatorToken.type === TokenType.DEFINE) {
     const [nameToken, ...restRest] = restTokens;
 
     const res = parseTokens(restRest);

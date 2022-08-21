@@ -13,6 +13,10 @@ import {
 } from "./resources/test-data";
 import { TokenType } from "./resources/types";
 
+beforeAll(() => {
+  jest.clearAllMocks();
+});
+
 describe("parser", () => {
   describe("happy paths", () => {
     it("takes a token array with simple math and returns an ast", () => {

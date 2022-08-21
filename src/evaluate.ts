@@ -3,7 +3,6 @@ import {
   ExpressionParam,
   ExpressionType,
   LiteralType,
-  UnaryOperationNames,
 } from "./resources/types";
 
 export function evaluate(
@@ -15,6 +14,18 @@ export function evaluate(
 
   if (node.type === LiteralType.STRING_LITERAL) {
     return node.value;
+  }
+
+  if (
+    node.type === ExpressionType.BEGIN ||
+    node.type === LiteralType.VARIABLE_REFERENCE
+  ) {
+    throw new Error("Handling it!");
+  }
+
+  if (node.type === ExpressionType.DEFINITION) {
+    definitions.set(node.boundName, node.boundValue);
+    return;
   }
 
   if (node.type === ExpressionType.TERNARY_OPERATION) {
@@ -57,3 +68,5 @@ export function evaluate(
 
   throw new Error(`Unhandled expression ${node}.`);
 }
+
+export const definitions = new Map();

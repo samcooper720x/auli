@@ -12,6 +12,10 @@ import {
 } from "./resources/test-data";
 import { tokeniser } from "./tokeniser";
 
+beforeAll(() => {
+  jest.clearAllMocks();
+});
+
 describe("tokeniser", () => {
   describe("happy paths", () => {
     it("takes a source string of basic math and returns a token array", () => {

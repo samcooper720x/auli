@@ -9,6 +9,7 @@ import {
   UnaryOperationNames,
   TernaryOperationNames,
   Definition,
+  Begin,
 } from "./types";
 
 // Basic math only
@@ -150,21 +151,42 @@ export const testAst3: UnaryOperation = {
 
 export const testResolution3 = undefined;
 
-// Define variable
-export const testSource4 = "(define mOfL 42)";
+// Define and reference a variable
+export const testSource4 = "(begin (define mOfL 42) (* 10 mOfL))";
 
 export const testTokens4: Token[] = [
   { type: TokenType.OPEN_PAREN, token: "(" },
-  { type: TokenType.DEFINITION, token: "define" },
+  { type: TokenType.BEGIN, token: "begin" },
+  { type: TokenType.OPEN_PAREN, token: "(" },
+  { type: TokenType.DEFINE, token: "define" },
   { type: TokenType.STRING, token: "mOfL" },
   { type: TokenType.NUMBER, token: "42" },
   { type: TokenType.CLOSE_PAREN, token: ")" },
+  { type: TokenType.OPEN_PAREN, token: "(" },
+  { type: TokenType.SYMBOL, token: "*" },
+  { type: TokenType.NUMBER, token: "10" },
+  { type: TokenType.STRING, token: "mOfL" },
+  { type: TokenType.CLOSE_PAREN, token: ")" },
+  { type: TokenType.CLOSE_PAREN, token: ")" },
 ];
 
-export const testAst4: Definition = {
-  type: ExpressionType.DEFINITION,
-  boundName: "mOfL",
-  boundValue: { type: LiteralType.NUMBER_LITERAL, value: "42" },
+export const testAst4: Begin = {
+  type: ExpressionType.BEGIN,
+  expressions: [
+    {
+      type: ExpressionType.DEFINITION,
+      boundName: "mOfL",
+      boundValue: { type: LiteralType.NUMBER_LITERAL, value: "42" },
+    },
+    {
+      type: ExpressionType.BINARY_OPERATION,
+      name: BinaryOperationNames.MULTIPLY,
+      params: [
+        { type: LiteralType.NUMBER_LITERAL, value: "10" },
+        { type: LiteralType.VARIABLE_REFERENCE, value: "mOfL" },
+      ],
+    },
+  ],
 };
 
 export const testResolution4 = undefined;
