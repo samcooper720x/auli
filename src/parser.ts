@@ -18,73 +18,36 @@ export function parser(tokens: Token[]): Expression {
     throw new SyntaxError("No initial call expression found.");
   }
 
-  const res = parseCallExpression(restTokens);
+  const res = parseExpression(restTokens);
 
   return res.callExpression;
 }
 
-interface ParseTokens {
-  (tokens: Token[], params: ExpressionParam[]): ParseTokens;
-}
-
-interface ParsedTokens {
-  params: ExpressionParam[];
-  remainingTokens: Token[];
-}
-
-function parseTokens(
-  tokens: Token[],
-  params: ExpressionParam[] = []
-): ParseTokens | ParsedTokens {
-  const [token, ...restTokens] = tokens;
-
-  if (!token) {
-    throw new Error("Unexpected eof.");
-  }
-
-  if (token.type === TokenType.DEFINITION) {
-    throw new Error("handling it!");
-  }
-
-  if (token.type === TokenType.NUMBER) {
-    return parseTokens(restTokens, [
-      ...params,
-      {
-        type: LiteralType.NUMBER_LITERAL,
-        value: token.token,
-      },
-    ]);
-  }
-
-  if (token.type === TokenType.QUOTE) {
-    const res = parseString(restTokens);
-
-    // For the sake of the type checker...
-    if (!("stringLiteral" in res)) {
-      throw new Error();
-    }
-
-    return parseTokens(res.remainingTokens, [...params, res.stringLiteral]);
-  }
-
-  if (token.type === TokenType.OPEN_PAREN) {
-    const res = parseCallExpression(restTokens);
-
-    return parseTokens(res.remainingTokens, [...params, res.callExpression]);
-  }
-
-  if (token.type === TokenType.CLOSE_PAREN) {
-    return { params: params, remainingTokens: restTokens };
-  }
-
-  throw new Error(`Unhandled token: ${token.token}`);
-}
-
-function parseCallExpression(tokens: Token[]): {
+function parseExpression(tokens: Token[]): {
   callExpression: Expression;
   remainingTokens: Token[];
 } {
   const [operatorToken, ...restTokens] = tokens;
+
+  if (operatorToken.type === TokenType.DEFINITION) {
+    const [nameToken, ...restRest] = restTokens;
+
+    const res = parseTokens(restRest);
+
+    // For the sake of the type checker...
+    if (!("params" in res)) {
+      throw new Error();
+    }
+
+    return {
+      callExpression: {
+        type: ExpressionType.DEFINITION,
+        boundName: nameToken.token,
+        boundValue: res.params[0],
+      },
+      remainingTokens: res.remainingTokens,
+    };
+  }
 
   if (operatorToken.type !== TokenType.SYMBOL) {
     throw new SyntaxError("Missing operator in call expression.");
@@ -139,6 +102,93 @@ function parseCallExpression(tokens: Token[]): {
   throw new SyntaxError(`Unknown operator: ${operatorToken.token}.`);
 }
 
+interface ParseString {
+  (tokens: Token[], stringInProgress: string[]): ParseString;
+}
+
+function parseString(
+  [token, ...restTokens]: Token[],
+  stringInProgress = ""
+):
+  | ParseString
+  | {
+      stringLiteral: StringLiteral;
+      remainingTokens: Token[];
+    } {
+  if (!token) {
+    throw new Error("Unexpected eof.");
+  }
+
+  if (token.type === TokenType.QUOTE) {
+    return {
+      stringLiteral: {
+        type: LiteralType.STRING_LITERAL,
+        value: stringInProgress,
+      },
+      remainingTokens: restTokens,
+    };
+  }
+
+  const updatedStringInProgress = stringInProgress
+    ? `${stringInProgress} ${token.token}`
+    : token.token;
+
+  return parseString(restTokens, updatedStringInProgress);
+}
+
+interface ParseTokens {
+  (tokens: Token[], params: ExpressionParam[]): ParseTokens;
+}
+
+interface ParsedTokens {
+  params: ExpressionParam[];
+  remainingTokens: Token[];
+}
+
+function parseTokens(
+  tokens: Token[],
+  params: ExpressionParam[] = []
+): ParseTokens | ParsedTokens {
+  const [token, ...restTokens] = tokens;
+
+  if (!token) {
+    throw new Error("Unexpected eof.");
+  }
+
+  if (token.type === TokenType.NUMBER) {
+    return parseTokens(restTokens, [
+      ...params,
+      {
+        type: LiteralType.NUMBER_LITERAL,
+        value: token.token,
+      },
+    ]);
+  }
+
+  if (token.type === TokenType.QUOTE) {
+    const res = parseString(restTokens);
+
+    // For the sake of the type checker...
+    if (!("stringLiteral" in res)) {
+      throw new Error();
+    }
+
+    return parseTokens(res.remainingTokens, [...params, res.stringLiteral]);
+  }
+
+  if (token.type === TokenType.OPEN_PAREN) {
+    const res = parseExpression(restTokens);
+
+    return parseTokens(res.remainingTokens, [...params, res.callExpression]);
+  }
+
+  if (token.type === TokenType.CLOSE_PAREN) {
+    return { params: params, remainingTokens: restTokens };
+  }
+
+  throw new Error(`Unhandled token: ${token.token}`);
+}
+
 function getUnaryOperationName(token: string): UnaryOperationNames | null {
   switch (token) {
     case "print":
@@ -186,34 +236,4 @@ function getTernaryOperationName(token: string): TernaryOperationNames | null {
     default:
       return null;
   }
-}
-
-interface ParseString {
-  (tokens: Token[], stringInProgress: string[]): ParseString;
-}
-
-function parseString(
-  [token, ...restTokens]: Token[],
-  stringInProgress = ""
-):
-  | ParseString
-  | {
-      stringLiteral: StringLiteral;
-      remainingTokens: Token[];
-    } {
-  if (token.type === TokenType.QUOTE) {
-    return {
-      stringLiteral: {
-        type: LiteralType.STRING_LITERAL,
-        value: stringInProgress,
-      },
-      remainingTokens: restTokens,
-    };
-  }
-
-  const updatedStringInProgress = stringInProgress
-    ? `${stringInProgress} ${token.token}`
-    : token.token;
-
-  return parseString(restTokens, updatedStringInProgress);
 }

@@ -150,7 +150,7 @@ export const testAst3: UnaryOperation = {
 
 export const testResolution3 = undefined;
 
-// Define
+// Define variable
 export const testSource4 = "(define mOfL 42)";
 
 export const testTokens4: Token[] = [
@@ -162,17 +162,17 @@ export const testTokens4: Token[] = [
 ];
 
 export const testAst4: Definition = {
-  type: ExpressionType.UNARY_OPERATION,
-  params: [
-    "mOfL",
-    {
-      type: LiteralType.STRING_LITERAL,
-      value: "hello world",
-    },
-  ],
+  type: ExpressionType.DEFINITION,
+  boundName: "mOfL",
+  boundValue: { type: LiteralType.NUMBER_LITERAL, value: "42" },
 };
 
 export const testResolution4 = undefined;
+
+// Define a function
+export const testSource5 = "(define add (lambda (x y) (+ x y)))";
+
+// TODO
 
 // All binary operations
 export const testBinaryOperationsSources = [

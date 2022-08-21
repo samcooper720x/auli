@@ -14,11 +14,16 @@ export enum TokenType {
   UNHANDLED = "unhandled",
 }
 
-export type Expression = UnaryOperation | BinaryOperation | TernaryOperation;
+export type Expression =
+  | Definition
+  | UnaryOperation
+  | BinaryOperation
+  | TernaryOperation;
 
 export interface Definition {
-  type: ExpressionType;
-  params: [string, ExpressionParam];
+  type: ExpressionType.DEFINITION;
+  boundName: string;
+  boundValue: ExpressionParam;
 }
 
 export interface UnaryOperation {
