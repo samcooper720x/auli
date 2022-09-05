@@ -14,7 +14,6 @@ Install all three and volta should make sure you're using the right versions.
 
 1. `yarn install` to install dependencies.
 2. `yarn tests` to ensure everything is working ok.
-3. `yarn build` to build.
 
 ### Evaluating expressions
 

@@ -4,7 +4,7 @@
   "description": "An interpreter for a subset of Lisp so small that it's almost useless.",
   "main": "dist/auli.js",
   "scripts": {
-    "auli": "node dist/auli.js",
+    "auli": "yarn build && node dist/auli.js",
     "build": "node ./esbuild.js",
     "test": "jest --runInBand -c jest.config.js",
     "eslint": "eslint --fix --ignore-path .eslintignore --ext .js,.ts .",
